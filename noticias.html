@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="pt-AO">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Notícias e comunicados do ITEL — Instituto de Telecomunicações de Angola." />
+  <title>ITEL — Notícias</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/index.css" />
+  <style>
+    /* ── Herói ── */
+    .pag-heroi {
+      position: relative;
+      padding: clamp(7rem,14vw,11rem) 0 clamp(3rem,6vw,5rem);
+      overflow: hidden;
+      text-align: center;
+    }
+    .pag-heroi-fundo {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 100% 80% at 50% 0%, rgba(13,48,128,.6) 0%, transparent 70%),
+        url('assets/img/heroi-noticias-fundo.jpg') center/cover no-repeat;
+      z-index: 0;
+    }
+    .pag-heroi-fundo::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg, rgba(2,12,27,.5) 0%, rgba(2,12,27,.72) 60%, var(--azul-900) 100%);
+    }
+    .pag-heroi-grade {
+      position: absolute; inset: 0;
+      background-image: radial-gradient(circle, rgba(255,255,255,.05) 1px, transparent 1px);
+      background-size: 36px 36px;
+      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black, transparent);
+      z-index: 1;
+    }
+    .pag-heroi-conteudo { position: relative; z-index: 2; }
+    .pag-migalha {
+      display: inline-flex; align-items: center; gap: .5rem;
+      font-size: .78rem; color: rgba(168,200,255,.55); margin-bottom: 1.2rem;
+    }
+    .pag-migalha a { color: rgba(168,200,255,.55); transition: var(--trans); }
+    .pag-migalha a:hover { color: var(--branco); }
+    .pag-migalha-sep { opacity: .4; }
+    .pag-migalha-actual { color: var(--azul-100); font-weight: 600; }
+    .pag-heroi-titulo {
+      font-family: var(--fonte-display);
+      font-size: clamp(2.2rem,5vw,4rem);
+      font-weight: 800; color: var(--branco); line-height: 1.08; margin-bottom: .9rem;
+    }
+    .pag-heroi-titulo span {
+      background: linear-gradient(135deg, var(--azul-200) 0%, var(--azul-50) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .pag-heroi-desc {
+      font-size: clamp(.9rem,1.6vw,1.05rem); color: rgba(168,200,255,.65);
+      max-width: 520px; margin-inline: auto; font-weight: 400; line-height: 1.7;
+    }
+
+    /* ── Layout 2 colunas + sidebar ── */
+    .noticias-layout {
+      display: grid;
+      grid-template-columns: 1fr 320px;
+      gap: clamp(1.5rem,3vw,2.5rem);
+      padding-block: clamp(3rem,6vw,5rem);
+      align-items: start;
+    }
+    @media (max-width: 900px) { .noticias-layout { grid-template-columns: 1fr; } }
+
+    /* ── Filtros ── */
+    .noticias-filtros {
+      display: flex; align-items: center; gap: .45rem; flex-wrap: wrap;
+      margin-bottom: clamp(1.5rem,3vw,2rem);
+    }
+    .noticias-filtro-btn {
+      background: var(--vidro); backdrop-filter: blur(20px);
+      border: 1px solid var(--vidro-borda); border-radius: var(--raio-full);
+      padding: .45rem clamp(.8rem,2vw,1.1rem);
+      color: rgba(168,200,255,.65); font-family: var(--fonte-display); font-weight: 700;
+      font-size: clamp(.72rem,1.3vw,.8rem); cursor: pointer; transition: var(--trans); white-space: nowrap;
+    }
+    .noticias-filtro-btn:hover, .noticias-filtro-btn.activo {
+      background: linear-gradient(135deg, var(--azul-500), var(--azul-400));
+      border-color: transparent; color: var(--branco); box-shadow: var(--sombra-azul);
+    }
+
+    /* ── Comunicado oficial ── */
+    .comunicado-card {
+      background: linear-gradient(135deg, rgba(13,48,128,.55), rgba(4,15,36,.75));
+      border: 1px solid rgba(46,109,232,.3);
+      border-radius: var(--raio-md);
+      padding: clamp(1.2rem,3vw,1.6rem);
+      margin-bottom: clamp(1.5rem,3vw,2rem);
+      position: relative;
+      overflow: hidden;
+    }
+    .comunicado-card::before {
+      content: '';
+      position: absolute; top: -40px; right: -40px;
+      width: 180px; height: 180px;
+      background: radial-gradient(circle, rgba(91,147,245,.12), transparent 70%);
+      pointer-events: none;
+    }
+    .comunicado-cab {
+      display: flex; align-items: center; gap: .65rem; margin-bottom: .75rem; flex-wrap: wrap;
+    }
+    .comunicado-ic {
+      width: 34px; height: 34px;
+      background: rgba(46,109,232,.15); border: 1px solid rgba(91,147,245,.3);
+      border-radius: var(--raio-sm); display: grid; place-items: center; font-size: .95rem; flex-shrink: 0;
+    }
+    .comunicado-label {
+      font-size: .68rem; font-weight: 700; letter-spacing: .12em;
+      text-transform: uppercase; color: var(--azul-100);
+    }
+    .comunicado-data { font-size: .72rem; color: rgba(168,200,255,.45); margin-left: auto; }
+    .comunicado-titulo {
+      font-family: var(--fonte-display); font-size: clamp(.92rem,1.8vw,1rem);
+      font-weight: 700; color: var(--branco); margin-bottom: .45rem; line-height: 1.35;
+    }
+    .comunicado-txt { font-size: clamp(.8rem,1.4vw,.85rem); color: rgba(168,200,255,.6); line-height: 1.65; }
+
+    /* ── Notícia destaque ── */
+    .noticia-destaque {
+      border-radius: var(--raio-lg); overflow: hidden;
+      background: var(--vidro); backdrop-filter: blur(20px);
+      border: 1px solid var(--vidro-borda);
+      margin-bottom: clamp(1.5rem,3vw,2rem);
+      cursor: pointer; transition: var(--trans-lenta); position: relative;
+    }
+    .noticia-destaque:hover {
+      border-color: rgba(91,147,245,.25);
+      box-shadow: var(--sombra-lg); transform: translateY(-4px);
+    }
+    .noticia-destaque::before {
+      content: ''; position: absolute; top: 0; left: -100%;
+      width: 60%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(91,147,245,.05), transparent);
+      transform: skewX(-20deg); transition: left .8s ease; z-index: 1; pointer-events: none;
+    }
+    .noticia-destaque:hover::before { left: 150%; }
+    .nd-img-wrap {
+      position: relative; overflow: hidden;
+      height: clamp(200px,30vw,360px);
+    }
+    .nd-img-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .6s ease; }
+    .noticia-destaque:hover .nd-img-wrap img { transform: scale(1.04); }
+    .nd-img-wrap::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(180deg, transparent 30%, rgba(2,12,27,.8) 100%);
+    }
+    .nd-badge {
+      position: absolute; top: 1.1rem; left: 1.1rem; z-index: 1;
+      display: inline-flex; align-items: center; gap: .4rem;
+      background: rgba(46,109,232,.2); border: 1px solid rgba(91,147,245,.4);
+      color: var(--azul-100); font-size: .68rem; font-weight: 700;
+      letter-spacing: .1em; text-transform: uppercase;
+      padding: .28rem .75rem; border-radius: var(--raio-full); backdrop-filter: blur(10px);
+    }
+    .nd-corpo { padding: clamp(1.3rem,3vw,1.8rem) clamp(1.3rem,3vw,2rem) clamp(1.5rem,3vw,2rem); }
+    .nd-meta {
+      display: flex; align-items: center; gap: .75rem; margin-bottom: .9rem; flex-wrap: wrap;
+    }
+    .nd-cat {
+      display: inline-flex; align-items: center;
+      background: rgba(46,109,232,.12); border: 1px solid rgba(91,147,245,.22);
+      color: var(--azul-100); font-size: .68rem; font-weight: 700;
+      letter-spacing: .08em; text-transform: uppercase;
+      padding: .26rem .72rem; border-radius: var(--raio-full);
+    }
+    .nd-data { font-size: .76rem; color: rgba(168,200,255,.5); }
+    .nd-tempo { font-size: .76rem; color: rgba(168,200,255,.5); margin-left: auto; white-space: nowrap; }
+    .nd-titulo {
+      font-family: var(--fonte-display);
+      font-size: clamp(1.2rem,2.5vw,1.75rem);
+      font-weight: 800; color: var(--branco); line-height: 1.2; margin-bottom: .85rem;
+    }
+    .nd-resumo {
+      font-size: clamp(.85rem,1.5vw,.93rem); color: rgba(168,200,255,.62);
+      line-height: 1.72; font-weight: 400; margin-bottom: 1.4rem;
+    }
+    .nd-rodape {
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 1rem;
+    }
+    .nd-autor { display: flex; align-items: center; gap: .65rem; }
+    .nd-autor-av {
+      width: 32px; height: 32px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--azul-500), var(--azul-300));
+      display: grid; place-items: center;
+      font-family: var(--fonte-display); font-weight: 700; font-size: .72rem;
+      color: var(--branco); flex-shrink: 0;
+    }
+    .nd-autor-nome { font-size: .8rem; color: rgba(255,255,255,.75); font-weight: 600; }
+    .nd-autor-cargo { font-size: .7rem; color: rgba(168,200,255,.45); }
+    .nd-link {
+      display: inline-flex; align-items: center; gap: .42rem;
+      color: var(--azul-200); font-size: .8rem; font-weight: 700;
+      text-decoration: none; letter-spacing: .03em; transition: var(--trans);
+    }
+    .nd-link:hover { color: var(--branco); gap: .7rem; }
+    .nd-link svg { width: 13px; height: 13px; }
+
+    /* ── Lista de notícias ── */
+    .noticias-lista { display: flex; flex-direction: column; gap: clamp(.9rem,2vw,1.2rem); }
+    .noticia-card {
+      display: grid; grid-template-columns: clamp(90px,14vw,120px) 1fr;
+      gap: clamp(.8rem,2vw,1.2rem);
+      background: var(--vidro); backdrop-filter: blur(20px);
+      border: 1px solid var(--vidro-borda);
+      border-radius: var(--raio-md); overflow: hidden;
+      cursor: pointer; transition: var(--trans);
+    }
+    .noticia-card:hover {
+      background: var(--vidro-hover); border-color: rgba(91,147,245,.2);
+      transform: translateX(5px); box-shadow: var(--sombra-azul);
+    }
+    .nc-img { overflow: hidden; min-height: 100px; }
+    .nc-img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .5s ease; }
+    .noticia-card:hover .nc-img img { transform: scale(1.07); }
+    .nc-corpo {
+      padding: clamp(.8rem,2vw,1rem) clamp(.9rem,2vw,1.2rem) clamp(.8rem,2vw,1rem) 0;
+      display: flex; flex-direction: column; justify-content: center; gap: .38rem;
+    }
+    .nc-cat {
+      display: inline-block;
+      background: rgba(46,109,232,.1); border: 1px solid rgba(91,147,245,.18);
+      color: var(--azul-100); font-size: .64rem; font-weight: 700;
+      letter-spacing: .08em; text-transform: uppercase;
+      padding: .2rem .58rem; border-radius: var(--raio-full); align-self: flex-start;
+    }
+    .nc-titulo {
+      font-family: var(--fonte-display); font-size: clamp(.85rem,1.5vw,.93rem);
+      font-weight: 700; color: var(--branco); line-height: 1.35;
+    }
+    .nc-meta { font-size: .7rem; color: rgba(168,200,255,.45); }
+
+    /* ── Paginação ── */
+    .paginacao {
+      display: flex; align-items: center; justify-content: center;
+      gap: .45rem; padding-top: clamp(2rem,4vw,2.5rem); flex-wrap: wrap;
+    }
+    .pag-btn {
+      width: 38px; height: 38px; border-radius: var(--raio-sm);
+      background: var(--vidro); border: 1px solid var(--vidro-borda);
+      color: rgba(168,200,255,.55); display: grid; place-items: center;
+      cursor: pointer; font-family: var(--fonte-display); font-weight: 700; font-size: .82rem; transition: var(--trans);
+    }
+    .pag-btn:hover, .pag-btn.activo {
+      background: linear-gradient(135deg, var(--azul-500), var(--azul-400));
+      border-color: transparent; color: var(--branco); box-shadow: var(--sombra-azul);
+    }
+    .pag-sep { color: rgba(168,200,255,.35); font-size: .82rem; padding: 0 .25rem; }
+
+    /* ── Sidebar ── */
+    .noticias-sidebar {
+      display: flex; flex-direction: column; gap: clamp(1rem,2vw,1.4rem);
+      position: sticky; top: 90px;
+    }
+    @media (max-width: 900px) { .noticias-sidebar { position: static; } }
+
+    .sidebar-bloco {
+      background: var(--vidro); backdrop-filter: blur(20px);
+      border: 1px solid var(--vidro-borda); border-radius: var(--raio-md);
+      padding: clamp(1.1rem,2.5vw,1.5rem);
+    }
+    .sidebar-titulo {
+      font-family: var(--fonte-display); font-weight: 800; font-size: .82rem;
+      color: rgba(255,255,255,.8); letter-spacing: .07em; text-transform: uppercase;
+      margin-bottom: 1.1rem; padding-bottom: .6rem;
+      border-bottom: 1px solid var(--vidro-borda);
+    }
+
+    /* Pesquisa */
+    .sb-pesquisa-wrap { position: relative; }
+    .sb-pesquisa-ic {
+      position: absolute; left: .85rem; top: 50%; transform: translateY(-50%);
+      color: rgba(168,200,255,.4); pointer-events: none;
+    }
+    .sb-pesquisa-ic svg { width: 15px; height: 15px; }
+    .sb-input {
+      width: 100%; background: rgba(255,255,255,.04);
+      border: 1px solid var(--vidro-borda); border-radius: var(--raio-sm);
+      padding: .72rem .85rem .72rem 2.4rem; color: var(--branco);
+      font-size: .84rem; font-family: var(--fonte-corpo); outline: none; transition: var(--trans);
+    }
+    .sb-input::placeholder { color: rgba(255,255,255,.22); }
+    .sb-input:focus { border-color: rgba(91,147,245,.4); background: rgba(255,255,255,.07); box-shadow: 0 0 0 3px rgba(46,109,232,.1); }
+
+    /* Mais lidas */
+    .mais-lidas { display: flex; flex-direction: column; gap: .7rem; }
+    .mais-lida {
+      display: flex; align-items: flex-start; gap: .75rem;
+      cursor: pointer; padding: .55rem; border-radius: var(--raio-sm); transition: var(--trans);
+    }
+    .mais-lida:hover { background: rgba(255,255,255,.04); }
+    .mais-lida-num {
+      font-family: var(--fonte-display); font-weight: 800; font-size: 1.1rem; line-height: 1;
+      min-width: 26px;
+      background: linear-gradient(135deg, var(--azul-300), var(--azul-100));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .mais-lida-titulo { font-size: .81rem; color: rgba(255,255,255,.72); line-height: 1.4; font-weight: 500; }
+    .mais-lida-data { font-size: .7rem; color: rgba(168,200,255,.4); margin-top: .18rem; }
+
+    /* Categorias */
+    .sb-categorias { display: flex; flex-direction: column; gap: .4rem; }
+    .sb-cat-item {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: .48rem .6rem; border-radius: var(--raio-sm);
+      cursor: pointer; transition: var(--trans);
+    }
+    .sb-cat-item:hover { background: rgba(255,255,255,.04); }
+    .sb-cat-nome { font-size: .84rem; color: rgba(255,255,255,.72); }
+    .sb-cat-badge {
+      font-size: .72rem; font-weight: 700;
+      background: rgba(46,109,232,.1); border: 1px solid rgba(91,147,245,.2);
+      color: var(--azul-100); padding: .18rem .6rem; border-radius: var(--raio-full);
+    }
+
+    /* Tags */
+    .tags-nuvem { display: flex; flex-wrap: wrap; gap: .45rem; }
+    .tag {
+      background: rgba(255,255,255,.04); border: 1px solid var(--vidro-borda);
+      border-radius: var(--raio-sm); padding: .32rem .7rem;
+      font-size: .73rem; color: rgba(168,200,255,.5);
+      cursor: pointer; transition: var(--trans);
+    }
+    .tag:hover { background: rgba(46,109,232,.12); border-color: rgba(91,147,245,.28); color: var(--azul-100); }
+
+    /* Newsletter sidebar */
+    .sb-newsletter { background: linear-gradient(135deg, rgba(13,48,128,.35), rgba(4,15,36,.5)); border-color: rgba(46,109,232,.35); }
+    .sb-newsletter .sidebar-titulo { color: var(--azul-100); }
+    .sb-newsletter-desc { font-size: .81rem; color: rgba(168,200,255,.55); line-height: 1.6; margin-bottom: 1rem; }
+    .sb-newsletter-form { display: flex; flex-direction: column; gap: .55rem; }
+    .sb-btn-assinar {
+      background: linear-gradient(135deg, var(--azul-500), var(--azul-400));
+      color: var(--branco); border: none; border-radius: var(--raio-sm);
+      padding: .68rem; font-family: var(--fonte-display); font-weight: 700;
+      font-size: .82rem; cursor: pointer; transition: var(--trans);
+    }
+    .sb-btn-assinar:hover { transform: translateY(-2px); box-shadow: var(--sombra-azul); }
+  </style>
+</head>
+<body>
+
+  <!-- NAVEGAÇÃO -->
+  <header>
+    <nav class="navegacao rolada" id="barra-nav">
+      <div class="container">
+        <div class="nav-interior">
+          <a href="index.html" class="nav-logo">
+            <div class="nav-logo-icone">IT</div>
+            <div class="nav-logo-txt">
+              <span class="nav-logo-nome">ITEL</span>
+              <span class="nav-logo-sub">Instituto de Telecomunicações</span>
+            </div>
+          </a>
+          <ul class="nav-links">
+            <li><a href="../index.html#cursos">Cursos</a></li>
+            <li><a href="../index.html#rodape"> Contactos</a></li>
+            <li><a href="../index.html#sobre">Sobre</a></li>
+            <li><a href="../index.html#parceiros">Parceiros</a></li>
+            <li><a href="noticias.html" style="color:var(--branco)">Notícias</a></li>
+            <li><a href="galeria.html">Galeria</a></li> 
+            <li><a href="login.html" class="nav-cta">Portal do Aluno</a></li>
+          </ul>
+          <button class="nav-hamburguer" id="btn-menu" aria-label="Abrir menu" aria-expanded="false">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <nav class="menu-mobile" id="menu-mobile" aria-hidden="true">
+    <button class="menu-fechar" id="btn-fechar" aria-label="Fechar menu">✕</button>
+    <a href="index.html#cursos"  onclick="fecharMenu()">Cursos</a>
+    <a href="index.html#sobre"   onclick="fecharMenu()">Sobre</a>
+    <a href="itel-noticias.html" onclick="fecharMenu()">Notícias</a>
+    <a href="itel-galeria.html"  onclick="fecharMenu()">Galeria</a>
+    <a href="index.html#rodape"  onclick="fecharMenu()">Contactos</a>
+    <a href="itel-login.html" class="btn-primario" onclick="fecharMenu()">Portal do Aluno</a>
+  </nav>
+
+  <main>
+    <!-- HERÓI -->
+    <section class="pag-heroi">
+      <div class="pag-heroi-fundo" aria-hidden="true"></div>
+      <div class="pag-heroi-grade"  aria-hidden="true"></div>
+      <div class="container pag-heroi-conteudo">
+        <nav class="pag-migalha" aria-label="Caminho de navegação">
+          <a href="../index.html">Início</a>
+          <span class="pag-migalha-sep">›</span>
+          <span class="pag-migalha-actual">Notícias</span>
+        </nav>
+        <h1 class="pag-heroi-titulo">Últimas <span>Notícias</span></h1>
+        <p class="pag-heroi-desc">Fique a par de tudo o que acontece no ITEL — comunicados, eventos, conquistas e novidades do mundo das telecomunicações.</p>
+      </div>
+    </section>
+
+    <!-- CORPO -->
+    <div class="container">
+      <div class="noticias-layout">
+
+        <!-- COLUNA PRINCIPAL -->
+        <div>
+          <!-- Filtros -->
+          <div class="noticias-filtros animar-entrada">
+            <button class="noticias-filtro-btn activo" onclick="filtrar(this,'todas')">Todas</button>
+            <button class="noticias-filtro-btn" onclick="filtrar(this,'comunicado')">Comunicados</button>
+            <button class="noticias-filtro-btn" onclick="filtrar(this,'evento')">Eventos</button>
+            <button class="noticias-filtro-btn" onclick="filtrar(this,'academico')">Académico</button>
+            <button class="noticias-filtro-btn" onclick="filtrar(this,'tecnologia')">Tecnologia</button>
+            <button class="noticias-filtro-btn" onclick="filtrar(this,'institucional')">Institucional</button>
+          </div>
+
+          <!-- Comunicado -->
+          <article class="comunicado-card animar-entrada" data-cat="comunicado">
+            <div class="comunicado-cab">
+              <div class="comunicado-ic">📢</div>
+              <span class="comunicado-label">Comunicado Oficial</span>
+              <span class="comunicado-data">5 de Setembro de 2025</span>
+            </div>
+            <h2 class="comunicado-titulo">Matrículas abertas para candidatos seleccionados — prazo encerra em Setembro</h2>
+            <p class="comunicado-txt">Todos os candidatos seleccionados para os cursos do ITEL que ainda não tenham efectuado a sua matrícula devem fazê-lo até ao final de Setembro do corrente ano. Após este prazo, as vagas serão redistribuídas.</p>
+          </article>
+
+          <!-- Destaque -->
+          <article class="noticia-destaque animar-entrada" data-cat="evento">
+            <div class="nd-img-wrap">
+              <img src="assets/img/galeria-fititel-stands.jpg" alt="FITITEL 2025" loading="lazy" />
+              <span class="nd-badge">⭐ Destaque</span>
+            </div>
+            <div class="nd-corpo">
+              <div class="nd-meta">
+                <span class="nd-cat">Evento</span>
+                <span class="nd-data">12 de Outubro de 2025</span>
+                <span class="nd-tempo">⏱ 4 min de leitura</span>
+              </div>
+              <h2 class="nd-titulo">FITITEL 2025 confirmado: a maior feira de inovação tecnológica de Angola está de volta</h2>
+              <p class="nd-resumo">O Instituto de Telecomunicações anuncia oficialmente a realização da 7.ª edição da Feira de Inovação em Tecnologia e Telecomunicações de Angola. O evento contará com painéis, workshops, competições entre estudantes e exposição de projectos desenvolvidos ao longo do ano lectivo.</p>
+              <div class="nd-rodape">
+                <div class="nd-autor">
+                  <div class="nd-autor-av">CG</div>
+                  <div>
+                    <p class="nd-autor-nome">Cláudio Gonçalves</p>
+                    <p class="nd-autor-cargo">Director Geral — ITEL</p>
+                  </div>
+                </div>
+                <a href="#" class="nd-link">
+                  Ler artigo completo
+                  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Lista -->
+          <div class="noticias-lista">
+            <article class="noticia-card animar-entrada atraso-1" data-cat="academico">
+              <div class="nc-img"><img src="assets/img/galeria-formatura-turma.jpg" alt="Resultados" loading="lazy"/></div>
+              <div class="nc-corpo">
+                <span class="nc-cat">Académico</span>
+                <h3 class="nc-titulo">Pautas do 2.º Trimestre já disponíveis no Portal do Aluno</h3>
+                <p class="nc-meta">28 Set 2025 · 2 min de leitura</p>
+              </div>
+            </article>
+
+            <article class="noticia-card animar-entrada atraso-2" data-cat="tecnologia">
+              <div class="nc-img"><img src="assets/img/heroi-fundo-tecnologia.jpg" alt="5G Angola" loading="lazy"/></div>
+              <div class="nc-corpo">
+                <span class="nc-cat">Tecnologia</span>
+                <h3 class="nc-titulo">Angola avança para implementação de redes 5G: o que muda para as telecomunicações</h3>
+                <p class="nc-meta">20 Set 2025 · 5 min de leitura</p>
+              </div>
+            </article>
+
+            <article class="noticia-card animar-entrada atraso-1" data-cat="institucional">
+              <div class="nc-img"><img src="assets/img/heroi-galeria-evento.jpg" alt="Parceria" loading="lazy"/></div>
+              <div class="nc-corpo">
+                <span class="nc-cat">Institucional</span>
+                <h3 class="nc-titulo">ITEL assina protocolo de cooperação com a Cisco para formação certificada</h3>
+                <p class="nc-meta">15 Set 2025 · 3 min de leitura</p>
+              </div>
+            </article>
+
+            <article class="noticia-card animar-entrada atraso-2" data-cat="evento">
+              <div class="nc-img"><img src="assets/img/galeria-fititel-palco-principal.jpg" alt="Workshop" loading="lazy"/></div>
+              <div class="nc-corpo">
+                <span class="nc-cat">Evento</span>
+                <h3 class="nc-titulo">Workshop gratuito de Segurança Informática abre inscrições para estudantes</h3>
+                <p class="nc-meta">8 Set 2025 · 2 min de leitura</p>
+              </div>
+            </article>
+
+            <article class="noticia-card animar-entrada atraso-1" data-cat="academico">
+              <div class="nc-img"><img src="assets/img/curso-informatica.jpg" alt="Bolsas" loading="lazy"/></div>
+              <div class="nc-corpo">
+                <span class="nc-cat">Académico</span>
+                <h3 class="nc-titulo">Programa de bolsas de excelência para o ano lectivo 2025/2026 — candidaturas abertas</h3>
+                <p class="nc-meta">1 Set 2025 · 4 min de leitura</p>
+              </div>
+            </article>
+
+            <article class="noticia-card animar-entrada atraso-2" data-cat="tecnologia">
+              <div class="nc-img"><img src="assets/img/galeria-aula-pratica-electronica.jpg" alt="IoT" loading="lazy"/></div>
+              <div class="nc-corpo">
+                <span class="nc-cat">Tecnologia</span>
+                <h3 class="nc-titulo">Estudantes do ITEL desenvolvem protótipo de sistema IoT para monitorização agrícola</h3>
+                <p class="nc-meta">25 Ago 2025 · 3 min de leitura</p>
+              </div>
+            </article>
+
+            <article class="noticia-card animar-entrada atraso-1" data-cat="comunicado">
+              <div class="nc-img"><img src="assets/img/galeria-biblioteca-tecnica.jpg" alt="Calendario" loading="lazy"/></div>
+              <div class="nc-corpo">
+                <span class="nc-cat">Comunicado</span>
+                <h3 class="nc-titulo">Calendário académico 2025/2026 publicado — consulte as datas importantes</h3>
+                <p class="nc-meta">18 Ago 2025 · 1 min de leitura</p>
+              </div>
+            </article>
+          </div>
+
+          <div class="paginacao animar-entrada">
+            <button class="pag-btn"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" width="13"><path d="M10 4L6 8l4 4"/></svg></button>
+            <button class="pag-btn activo">1</button>
+            <button class="pag-btn">2</button>
+            <button class="pag-btn">3</button>
+            <span class="pag-sep">…</span>
+            <button class="pag-btn">12</button>
+            <button class="pag-btn"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" width="13"><path d="M6 4l4 4-4 4"/></svg></button>
+          </div>
+        </div>
+
+        <!-- SIDEBAR -->
+        <aside class="noticias-sidebar">
+
+          <div class="sidebar-bloco animar-entrada">
+            <p class="sidebar-titulo">Pesquisar</p>
+            <div class="sb-pesquisa-wrap">
+              <span class="sb-pesquisa-ic"><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"/></svg></span>
+              <input type="search" class="sb-input" id="pesquisa-input" placeholder="Procurar notícias…" aria-label="Pesquisar notícias" />
+            </div>
+          </div>
+
+          <div class="sidebar-bloco animar-entrada atraso-1">
+            <p class="sidebar-titulo">Mais Lidas</p>
+            <div class="mais-lidas">
+              <div class="mais-lida"><span class="mais-lida-num">01</span><div><p class="mais-lida-titulo">FITITEL 2025 confirmado — inscrições abertas</p><p class="mais-lida-data">12 Out 2025</p></div></div>
+              <div class="mais-lida"><span class="mais-lida-num">02</span><div><p class="mais-lida-titulo">Protocolo com Cisco: certificações disponíveis em 2026</p><p class="mais-lida-data">15 Set 2025</p></div></div>
+              <div class="mais-lida"><span class="mais-lida-num">03</span><div><p class="mais-lida-titulo">Bolsas de excelência 2025/2026 — candidatura online</p><p class="mais-lida-data">1 Set 2025</p></div></div>
+              <div class="mais-lida"><span class="mais-lida-num">04</span><div><p class="mais-lida-titulo">Angola 5G: o papel dos técnicos de telecomunicações</p><p class="mais-lida-data">20 Set 2025</p></div></div>
+              <div class="mais-lida"><span class="mais-lida-num">05</span><div><p class="mais-lida-titulo">Projecto IoT de estudantes reconhecido a nível nacional</p><p class="mais-lida-data">25 Ago 2025</p></div></div>
+            </div>
+          </div>
+
+          <div class="sidebar-bloco animar-entrada atraso-2">
+            <p class="sidebar-titulo">Categorias</p>
+            <div class="sb-categorias">
+              <div class="sb-cat-item"><span class="sb-cat-nome">Comunicados</span><span class="sb-cat-badge">14</span></div>
+              <div class="sb-cat-item"><span class="sb-cat-nome">Eventos</span><span class="sb-cat-badge">23</span></div>
+              <div class="sb-cat-item"><span class="sb-cat-nome">Académico</span><span class="sb-cat-badge">31</span></div>
+              <div class="sb-cat-item"><span class="sb-cat-nome">Tecnologia</span><span class="sb-cat-badge">19</span></div>
+              <div class="sb-cat-item"><span class="sb-cat-nome">Institucional</span><span class="sb-cat-badge">8</span></div>
+            </div>
+          </div>
+
+          <div class="sidebar-bloco animar-entrada atraso-3">
+            <p class="sidebar-titulo">Tags</p>
+            <div class="tags-nuvem">
+              <span class="tag">FITITEL</span><span class="tag">Matrículas</span><span class="tag">Cisco</span>
+              <span class="tag">5G</span><span class="tag">IoT</span><span class="tag">Bolsas</span>
+              <span class="tag">Electrónica</span><span class="tag">Informática</span><span class="tag">Formatura</span>
+              <span class="tag">Protocolo</span><span class="tag">Luanda</span><span class="tag">Angola</span>
+            </div>
+          </div>
+
+          <div class="sidebar-bloco sb-newsletter animar-entrada atraso-4">
+            <p class="sidebar-titulo">Newsletter</p>
+            <p class="sb-newsletter-desc">Recebe as últimas notícias do ITEL directamente no teu e-mail. Sem spam.</p>
+            <div class="sb-newsletter-form">
+              <label for="sb-email" class="sr-only">O teu e-mail</label>
+              <input type="email" id="sb-email" class="sb-input" placeholder="O teu e-mail" autocomplete="email" />
+              <button type="button" class="sb-btn-assinar">Subscrever</button>
+            </div>
+          </div>
+
+        </aside>
+      </div>
+    </div>
+  </main>
+
+  <!-- RODAPÉ -->
+  <footer class="rodape" style="padding-top:2rem">
+    <div class="container">
+      <div class="rodape-divisor"></div>
+      <div class="rodape-base" style="justify-content:center;flex-direction:column;align-items:center;gap:.5rem">
+        <p class="rodape-copyright">© 2025 Instituto de Telecomunicações — ITEL. Todos os direitos reservados.</p>
+        <nav class="rodape-legais">
+          <a href="#">Termos de Uso</a>
+          <a href="#">Privacidade</a>
+          <a href="index.html">Página Principal</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+  <button class="voltar-topo" id="btn-topo" aria-label="Voltar ao topo">↑</button>
+
+  <script>
+    'use strict';
+    const menuMobile = document.getElementById('menu-mobile');
+    const btnMenu    = document.getElementById('btn-menu');
+    btnMenu.addEventListener('click', () => {
+      menuMobile.classList.add('aberto'); menuMobile.setAttribute('aria-hidden','false');
+      btnMenu.setAttribute('aria-expanded','true'); document.body.style.overflow='hidden';
+    });
+    document.getElementById('btn-fechar').addEventListener('click', fecharMenu);
+    function fecharMenu() {
+      menuMobile.classList.remove('aberto'); menuMobile.setAttribute('aria-hidden','true');
+      btnMenu.setAttribute('aria-expanded','false'); document.body.style.overflow='';
+    }
+    document.addEventListener('keydown', e => { if(e.key==='Escape' && menuMobile.classList.contains('aberto')) fecharMenu(); });
+
+    const btnTopo = document.getElementById('btn-topo');
+    window.addEventListener('scroll', () => btnTopo.classList.toggle('visivel', scrollY>400), {passive:true});
+    btnTopo.addEventListener('click', () => scrollTo({top:0,behavior:'smooth'}));
+
+    const obs = new IntersectionObserver(es => es.forEach(e => { if(e.isIntersecting){e.target.classList.add('visivel');obs.unobserve(e.target);}}),{threshold:.08});
+    document.querySelectorAll('.animar-entrada').forEach(el => obs.observe(el));
+
+    function filtrar(btn, cat) {
+      document.querySelectorAll('.noticias-filtro-btn').forEach(b => b.classList.remove('activo'));
+      btn.classList.add('activo');
+      document.querySelectorAll('.noticia-card,.noticia-destaque,.comunicado-card').forEach(el => {
+        const ok = cat==='todas' || el.dataset.cat===cat;
+        el.style.opacity       = ok ? '1' : '0.15';
+        el.style.transform     = ok ? '' : 'scale(0.97)';
+        el.style.pointerEvents = ok ? 'all' : 'none';
+        el.style.transition    = 'opacity .4s ease, transform .4s ease';
+      });
+    }
+
+    document.getElementById('pesquisa-input').addEventListener('input', function() {
+      const q = this.value.toLowerCase().trim();
+      document.querySelectorAll('.noticia-card').forEach(card => {
+        const txt = card.querySelector('.nc-titulo').textContent.toLowerCase();
+        const ok  = !q || txt.includes(q);
+        card.style.opacity   = ok ? '1' : '0.15';
+        card.style.transform = ok ? '' : 'scale(0.97)';
+      });
+    });
+  </script>
+</body>
+</html>
