@@ -5,16 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="ITEL — Instituto de Telecomunicações de Angola. Formação técnica de excelência em Electrónica, Informática e Sistemas Multimédia." />
   <title>ITEL — Instituto de Telecomunicações</title>
+
+  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;family=Space+Grotesk:wght@400;500;700&amp;display=swap" rel="stylesheet" />
+
+  <!-- CSS Principal -->
   <link rel="stylesheet" href="css/index.css" />
 </head>
+
 <body>
 
-  <!-- ══════════════════════════════════════════════
-       NAVEGAÇÃO
-  ══════════════════════════════════════════════ -->
+  <!-- NAVEGAÇÃO -->
   <header>
     <nav class="navegacao" id="barra-nav" role="navigation" aria-label="Menu principal">
       <div class="container">
@@ -30,11 +33,12 @@
 
           <ul class="nav-links" role="list">
             <li><a href="#cursos">Cursos</a></li>
-            <li><a href="#rodape"> Contactos</a></li>
             <li><a href="#sobre">Sobre</a></li>
-            <li><a href="#parceiros">Parceiros</a></li>
+            <li><a href="pages/itel actividades.html">Actividades</a></li>
+            <li><a href="pages/itel directores.html">Ex‑Directores</a></li>
             <li><a href="pages/noticias.html">Notícias</a></li>
-            <li><a href="pages/galeria.html">Galeria</a></li> 
+            <li><a href="pages/galeria.html">Galeria</a></li>
+            <li><a href="#rodape">Contactos</a></li>
             <li><a href="pages/login.html" class="nav-cta">Portal do Aluno</a></li>
           </ul>
 
@@ -48,26 +52,27 @@
     </nav>
   </header>
 
-  <!-- Menu Mobile -->
+  <!-- MENU MOBILE -->
   <nav class="menu-mobile" id="menu-mobile" aria-label="Menu mobile" aria-hidden="true">
     <button class="menu-fechar" id="btn-fechar" aria-label="Fechar menu">✕</button>
-    <a href="#cursos"    onclick="fecharMenu()">Cursos</a>
-    <a href="#sobre"     onclick="fecharMenu()">Sobre</a>
-    <a href="#parceiros" onclick="fecharMenu()">Parceiros</a>
-    <a href="#rodape"    onclick="fecharMenu()">Contactos</a>
+    <a href="#cursos" onclick="fecharMenu()">Cursos</a>
+    <a href="#sobre" onclick="fecharMenu()">Sobre</a>
+    <a href="itel-actividades.html" onclick="fecharMenu()">Actividades</a>
+    <a href="itel-directores.html" onclick="fecharMenu()">Ex‑Directores</a>
+    <a href="itel-noticias.html" onclick="fecharMenu()">Notícias</a>
+    <a href="itel-galeria.html" onclick="fecharMenu()">Galeria</a>
+    <a href="#rodape" onclick="fecharMenu()">Contactos</a>
     <a href="itel-login.html" class="btn-primario" onclick="fecharMenu()">Portal do Aluno</a>
   </nav>
 
   <main>
 
-    <!-- ══════════════════════════════════════════════
-         HERÓI / CARROSSEL
-    ══════════════════════════════════════════════ -->
+    <!-- HERÓI / CARROSSEL -->
     <section class="heroi" aria-label="Destaques principais">
       <div class="heroi-fundo" aria-hidden="true"></div>
       <div class="heroi-orb heroi-orb-a" aria-hidden="true"></div>
       <div class="heroi-orb heroi-orb-b" aria-hidden="true"></div>
-      <div class="heroi-grade"            aria-hidden="true"></div>
+      <div class="heroi-grade" aria-hidden="true"></div>
 
       <div class="container heroi-conteudo">
 
@@ -137,16 +142,18 @@
           </div>
         </article>
 
-        <!-- Controles -->
+        <!-- Controles do carrossel -->
         <div class="heroi-controles" role="group" aria-label="Navegação do carrossel">
           <button class="heroi-seta" id="seta-ant" aria-label="Slide anterior">
             <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" width="16" height="16" aria-hidden="true"><path d="M10 4L6 8l4 4"/></svg>
           </button>
+
           <div class="heroi-dots" role="tablist" aria-label="Indicadores do carrossel">
             <button class="heroi-dot ativo" data-idx="0" aria-label="Ir para slide 1" role="tab" aria-selected="true"></button>
-            <button class="heroi-dot"       data-idx="1" aria-label="Ir para slide 2" role="tab" aria-selected="false"></button>
-            <button class="heroi-dot"       data-idx="2" aria-label="Ir para slide 3" role="tab" aria-selected="false"></button>
+            <button class="heroi-dot" data-idx="1" aria-label="Ir para slide 2" role="tab" aria-selected="false"></button>
+            <button class="heroi-dot" data-idx="2" aria-label="Ir para slide 3" role="tab" aria-selected="false"></button>
           </div>
+
           <button class="heroi-seta" id="seta-prox" aria-label="Próximo slide">
             <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" width="16" height="16" aria-hidden="true"><path d="M6 4l4 4-4 4"/></svg>
           </button>
@@ -155,9 +162,7 @@
       </div>
     </section>
 
-    <!-- ══════════════════════════════════════════════
-         FAIXA WHATSAPP
-    ══════════════════════════════════════════════ -->
+    <!-- FAIXA WHATSAPP -->
     <aside class="faixa-whatsapp" aria-label="Contacto via WhatsApp">
       <div class="container faixa-whatsapp-int">
         <p class="faixa-whatsapp-txt">Para informações, contacte o nosso WhatsApp</p>
@@ -170,9 +175,7 @@
       </div>
     </aside>
 
-    <!-- ══════════════════════════════════════════════
-         LOGOS PARCEIROS
-    ══════════════════════════════════════════════ -->
+    <!-- LOGOS PARCEIROS -->
     <section class="faixa-logos animar-entrada" aria-label="Parceiros institucionais">
       <div class="container">
         <p class="faixa-logos-label">Em parceria com</p>
@@ -187,17 +190,13 @@
       </div>
     </section>
 
-    <!-- ══════════════════════════════════════════════
-         EVENTO FITITEL
-    ══════════════════════════════════════════════ -->
+    <!-- EVENTO FITITEL -->
     <section class="secao-evento" id="evento" aria-labelledby="evento-titulo">
       <div class="container">
         <article class="card-evento animar-entrada">
-          <div class="evento-texto">
+          <div>
             <span class="evento-badge">Evento em Destaque</span>
-            <h2 class="evento-titulo" id="evento-titulo">
-              FITITEL <span>2025</span>
-            </h2>
+            <h2 class="evento-titulo" id="evento-titulo">FITITEL <span>2025</span></h2>
             <p class="evento-desc">
               Feira de Inovação em Tecnologia e Telecomunicações de Angola. Um espaço de partilha, aprendizagem e conexão entre profissionais, estudantes e empresas do sector.
             </p>
@@ -215,80 +214,62 @@
       </div>
     </section>
 
-    <!-- ══════════════════════════════════════════════
-         CURSOS
-    ══════════════════════════════════════════════ -->
+    <!-- CURSOS -->
     <section class="secao-cursos" id="cursos" aria-labelledby="cursos-titulo">
       <div class="container">
         <header class="secao-cabecalho">
           <div class="secao-etiqueta">Formação Técnica</div>
-          <div class="linha-deco animar-entrada">
-            <div class="linha-deco-centro"></div>
-          </div>
-          <h2 class="secao-titulo animar-entrada" id="cursos-titulo">
-            <span>Nossos</span> Cursos
-          </h2>
+          <div class="linha-deco animar-entrada"><div class="linha-deco-centro"></div></div>
+          <h2 class="secao-titulo animar-entrada" id="cursos-titulo"><span>Nossos</span> Cursos</h2>
           <p class="secao-subtitulo animar-entrada">
             Formação de técnicos médios qualificados para os desafios do mercado tecnológico angolano e internacional.
           </p>
         </header>
 
         <div class="grade-cursos">
+          <!-- Card 1 -->
           <article class="card-curso animar-entrada atraso-1">
             <div class="card-curso-img-wrap">
-              <img src="assets/img/curso-electronica-telecomunicacoes.jpg"
-                   alt="Técnico a trabalhar em electrónica e telecomunicações"
-                   loading="lazy" width="600" height="200" />
+              <img src="assets/img/curso-electronica-telecomunicacoes.jpg" alt="Técnico a trabalhar em electrónica e telecomunicações" loading="lazy" width="600" height="200" />
             </div>
             <div class="card-curso-corpo">
               <span class="card-curso-tag">Técnico Médio</span>
               <h3 class="card-curso-titulo">Electrónica e Telecomunicações</h3>
               <p class="card-curso-desc">Especialistas em sistemas electrónicos, manutenção de equipamentos e redes de telecomunicações modernas.</p>
               <div class="card-curso-rodape">
-                <a href="#" class="card-curso-link">
-                  Saiba mais
-                  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
-                </a>
+                <a href="#" class="card-curso-link">Saiba mais <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
                 <span class="card-curso-duracao">3 anos</span>
               </div>
             </div>
           </article>
 
+          <!-- Card 2 -->
           <article class="card-curso animar-entrada atraso-2">
             <div class="card-curso-img-wrap">
-              <img src="assets/img/curso-informatica.jpg"
-                   alt="Estudante a trabalhar no computador"
-                   loading="lazy" width="600" height="200" />
+              <img src="assets/img/curso-informatica.jpg" alt="Estudante a trabalhar no computador" loading="lazy" width="600" height="200" />
             </div>
             <div class="card-curso-corpo">
               <span class="card-curso-tag">Técnico Médio</span>
               <h3 class="card-curso-titulo">Técnico de Informática</h3>
               <p class="card-curso-desc">Competências em programação, redes, bases de dados e administração de sistemas informáticos.</p>
               <div class="card-curso-rodape">
-                <a href="#" class="card-curso-link">
-                  Saiba mais
-                  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
-                </a>
+                <a href="#" class="card-curso-link">Saiba mais <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
                 <span class="card-curso-duracao">3 anos</span>
               </div>
             </div>
           </article>
 
+          <!-- Card 3 -->
           <article class="card-curso animar-entrada atraso-3">
             <div class="card-curso-img-wrap">
-              <img src="assets/img/curso-informatica-multimedia.jpg"
-                   alt="Produção multimédia e design digital"
-                   loading="lazy" width="600" height="200" />
+              <img src="assets/img/curso-informatica-multimedia.jpg" alt="Produção multimédia e design digital" loading="lazy" width="600" height="200" />
             </div>
             <div class="card-curso-corpo">
               <span class="card-curso-tag">Técnico Médio</span>
               <h3 class="card-curso-titulo">Informática e Sistemas Multimédia</h3>
               <p class="card-curso-desc">Tecnologia e criatividade na produção de conteúdos digitais, design e sistemas interactivos.</p>
               <div class="card-curso-rodape">
-                <a href="#" class="card-curso-link">
-                  Saiba mais
-                  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
-                </a>
+                <a href="#" class="card-curso-link">Saiba mais <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
                 <span class="card-curso-duracao">3 anos</span>
               </div>
             </div>
@@ -297,19 +278,13 @@
       </div>
     </section>
 
-    <!-- ══════════════════════════════════════════════
-         MENSAGEM DO DIRECTOR
-    ══════════════════════════════════════════════ -->
+    <!-- MENSAGEM DO DIRECTOR -->
     <section class="secao-director" id="sobre" aria-labelledby="director-titulo">
       <div class="container">
         <header class="secao-cabecalho">
           <div class="secao-etiqueta">Liderança</div>
-          <div class="linha-deco animar-entrada">
-            <div class="linha-deco-centro"></div>
-          </div>
-          <h2 class="secao-titulo animar-entrada" id="director-titulo">
-            Mensagem do <span>Director Geral</span>
-          </h2>
+          <div class="linha-deco animar-entrada"><div class="linha-deco-centro"></div></div>
+          <h2 class="secao-titulo animar-entrada" id="director-titulo">Mensagem do <span>Director Geral</span></h2>
         </header>
 
         <article class="card-director animar-entrada">
@@ -325,19 +300,13 @@
       </div>
     </section>
 
-    <!-- ══════════════════════════════════════════════
-         QUADROS FORMADOS
-    ══════════════════════════════════════════════ -->
+    <!-- QUADROS FORMADOS -->
     <section class="secao-formados" aria-labelledby="formados-titulo">
       <div class="container">
         <header class="secao-cabecalho">
           <div class="secao-etiqueta">Excelência Académica</div>
-          <div class="linha-deco animar-entrada">
-            <div class="linha-deco-centro"></div>
-          </div>
-          <h2 class="secao-titulo animar-entrada" id="formados-titulo">
-            Quadros <span>Formados</span>
-          </h2>
+          <div class="linha-deco animar-entrada"><div class="linha-deco-centro"></div></div>
+          <h2 class="secao-titulo animar-entrada" id="formados-titulo">Quadros <span>Formados</span></h2>
         </header>
 
         <ul class="lista-formados" role="list">
@@ -349,7 +318,6 @@
             </div>
             <span class="formado-ano">2023 · GTT</span>
           </li>
-
           <li class="card-formado animar-entrada atraso-2">
             <div class="formado-avatar fa-2" aria-hidden="true">AF</div>
             <div class="formado-info">
@@ -358,7 +326,6 @@
             </div>
             <span class="formado-ano">2023 · GTT</span>
           </li>
-
           <li class="card-formado animar-entrada atraso-3">
             <div class="formado-avatar fa-3" aria-hidden="true">AF</div>
             <div class="formado-info">
@@ -371,19 +338,13 @@
       </div>
     </section>
 
-    <!-- ══════════════════════════════════════════════
-         PARCEIROS
-    ══════════════════════════════════════════════ -->
+    <!-- PARCEIROS -->
     <section class="secao-parceiros" id="parceiros" aria-labelledby="parceiros-titulo">
       <div class="container">
         <header class="secao-cabecalho">
           <div class="secao-etiqueta">Rede de Parceiros</div>
-          <div class="linha-deco animar-entrada">
-            <div class="linha-deco-centro"></div>
-          </div>
-          <h2 class="secao-titulo animar-entrada" id="parceiros-titulo">
-            Nossos <span>Parceiros</span>
-          </h2>
+          <div class="linha-deco animar-entrada"><div class="linha-deco-centro"></div></div>
+          <h2 class="secao-titulo animar-entrada" id="parceiros-titulo">Nossos <span>Parceiros</span></h2>
         </header>
 
         <div class="grade-parceiros" role="list">
@@ -397,16 +358,12 @@
       </div>
     </section>
 
-    <!-- ══════════════════════════════════════════════
-         APOIOS
-    ══════════════════════════════════════════════ -->
+    <!-- APOIOS -->
     <section class="secao-apoios" aria-labelledby="apoios-titulo">
       <div class="container">
         <header class="secao-cabecalho">
           <div class="secao-etiqueta">Apoios</div>
-          <div class="linha-deco animar-entrada">
-            <div class="linha-deco-centro"></div>
-          </div>
+          <div class="linha-deco animar-entrada"><div class="linha-deco-centro"></div></div>
           <h2 class="secao-titulo animar-entrada" id="apoios-titulo">Apoios Institucionais</h2>
         </header>
         <div class="grade-apoios animar-entrada" role="list">
@@ -417,16 +374,12 @@
       </div>
     </section>
 
-    <!-- ══════════════════════════════════════════════
-         MARCAS DO ITEL
-    ══════════════════════════════════════════════ -->
+    <!-- MARCAS DO ITEL -->
     <section class="secao-marcas" aria-labelledby="marcas-titulo">
       <div class="container">
         <header class="secao-cabecalho">
           <div class="secao-etiqueta">Ecossistema</div>
-          <div class="linha-deco animar-entrada">
-            <div class="linha-deco-centro"></div>
-          </div>
+          <div class="linha-deco animar-entrada"><div class="linha-deco-centro"></div></div>
           <h2 class="secao-titulo animar-entrada" id="marcas-titulo">Marcas do <span>ITEL</span></h2>
         </header>
         <div class="grade-marcas animar-entrada" role="list">
@@ -437,9 +390,7 @@
       </div>
     </section>
 
-    <!-- ══════════════════════════════════════════════
-         BANNER FEEDBACK
-    ══════════════════════════════════════════════ -->
+    <!-- BANNER FEEDBACK -->
     <aside class="banner-feedback animar-entrada" aria-label="Feedback">
       <div class="container banner-feedback-int">
         <p class="banner-feedback-txt">💬 Tens elogios, sugestões ou reclamações?</p>
@@ -452,9 +403,7 @@
 
   </main>
 
-  <!-- ══════════════════════════════════════════════
-       RODAPÉ
-  ══════════════════════════════════════════════ -->
+  <!-- RODAPÉ -->
   <footer class="rodape" id="rodape" aria-label="Rodapé do site">
     <div class="container">
       <div class="rodape-grade">
@@ -524,13 +473,7 @@
             <p class="rodape-newsletter-sub">Fique a par de eventos e comunicados do ITEL.</p>
             <div class="rodape-newsletter-form">
               <label for="email-newsletter" class="sr-only">O seu e-mail</label>
-              <input
-                type="email"
-                id="email-newsletter"
-                class="rodape-input"
-                placeholder="O seu e-mail"
-                autocomplete="email"
-              />
+              <input type="email" id="email-newsletter" class="rodape-input" placeholder="O seu e-mail" autocomplete="email" />
               <button type="button" class="rodape-btn-assinar">Assinar</button>
             </div>
           </div>
@@ -541,9 +484,7 @@
       <div class="rodape-divisor"></div>
 
       <div class="rodape-base">
-        <p class="rodape-copyright">
-          © 2025 Instituto de Telecomunicações — ITEL. Todos os direitos reservados.
-        </p>
+        <p class="rodape-copyright">© 2025 Instituto de Telecomunicações — ITEL. Todos os direitos reservados.</p>
         <nav class="rodape-legais" aria-label="Links legais">
           <a href="#">Termos de Uso</a>
           <a href="#">Privacidade</a>
@@ -552,16 +493,14 @@
     </div>
   </footer>
 
-  <!-- Botão voltar ao topo -->
+  <!-- BOTÃO VOLTAR AO TOPO -->
   <button class="voltar-topo" id="btn-topo" aria-label="Voltar ao topo da página">↑</button>
 
-  <!-- ══════════════════════════════════════════════
-       JAVASCRIPT
-  ══════════════════════════════════════════════ -->
+  <!-- JAVASCRIPT -->
   <script>
     'use strict';
 
-    // ── Carrossel ───────────────────────────────────
+    // Carrossel
     let slideActual = 0;
     const TOTAL = 3;
     let intervalo;
@@ -587,13 +526,12 @@
     }
 
     document.getElementById('seta-prox').addEventListener('click', () => { irParaSlide(slideActual + 1); resetIntervalo(); });
-    document.getElementById('seta-ant').addEventListener('click',  () => { irParaSlide(slideActual - 1); resetIntervalo(); });
+    document.getElementById('seta-ant').addEventListener('click', () => { irParaSlide(slideActual - 1); resetIntervalo(); });
 
     document.querySelectorAll('.heroi-dot').forEach(dot => {
       dot.addEventListener('click', () => { irParaSlide(+dot.dataset.idx); resetIntervalo(); });
     });
 
-    // Suporte teclado no carrossel
     document.querySelector('.heroi-controles').addEventListener('keydown', e => {
       if (e.key === 'ArrowRight') { irParaSlide(slideActual + 1); resetIntervalo(); }
       if (e.key === 'ArrowLeft')  { irParaSlide(slideActual - 1); resetIntervalo(); }
@@ -601,21 +539,20 @@
 
     resetIntervalo();
 
-    // ── Navbar ao fazer scroll ──────────────────────
+    // Navbar scroll
     const barraNav = document.getElementById('barra-nav');
-    const onScroll = () => {
+    window.addEventListener('scroll', () => {
       barraNav.classList.toggle('rolada', window.scrollY > 60);
-    };
-    window.addEventListener('scroll', onScroll, { passive: true });
+    }, { passive: true });
 
-    // ── Botão voltar ao topo ────────────────────────
+    // Botão voltar ao topo
     const btnTopo = document.getElementById('btn-topo');
     window.addEventListener('scroll', () => {
       btnTopo.classList.toggle('visivel', window.scrollY > 400);
     }, { passive: true });
     btnTopo.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
-    // ── Menu mobile ─────────────────────────────────
+    // Menu mobile
     const menuMobile = document.getElementById('menu-mobile');
     const btnMenu    = document.getElementById('btn-menu');
 
@@ -635,37 +572,32 @@
       document.body.style.overflow = '';
     }
 
-    // Fechar menu com ESC
     document.addEventListener('keydown', e => {
       if (e.key === 'Escape' && menuMobile.classList.contains('aberto')) fecharMenu();
     });
 
-    // ── IntersectionObserver para animações ─────────
-    const observer = new IntersectionObserver((entries) => {
+    // Animações
+    const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('visivel');
-          observer.unobserve(entry.target); // anima apenas uma vez
+          observer.unobserve(entry.target);
         }
       });
     }, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
 
-    document.querySelectorAll('.animar-entrada, .animar-esq').forEach(el => {
-      observer.observe(el);
-    });
+    document.querySelectorAll('.animar-entrada, .animar-esq').forEach(el => observer.observe(el));
 
-    // ── Efeito 3D nos cards de curso (apenas desktop) ──
+    // Efeito 3D nos cards (desktop)
     if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
       document.querySelectorAll('.card-curso').forEach(card => {
         card.addEventListener('mousemove', e => {
-          const r  = card.getBoundingClientRect();
-          const dx = (e.clientX - r.left  - r.width  / 2) / (r.width  / 2);
-          const dy = (e.clientY - r.top   - r.height / 2) / (r.height / 2);
-          card.style.transform = `translateY(-8px) rotateX(${-dy * 4}deg) rotateY(${dx * 4}deg)`;
+          const r = card.getBoundingClientRect();
+          const dx = (e.clientX - r.left - r.width / 2) / (r.width / 2);
+          const dy = (e.clientY - r.top - r.height / 2) / (r.height / 2);
+          card.style.transform = `translateY(-8px) rotateX(\( {-dy * 4}deg) rotateY( \){dx * 4}deg)`;
         });
-        card.addEventListener('mouseleave', () => {
-          card.style.transform = '';
-        });
+        card.addEventListener('mouseleave', () => card.style.transform = '');
       });
     }
   </script>

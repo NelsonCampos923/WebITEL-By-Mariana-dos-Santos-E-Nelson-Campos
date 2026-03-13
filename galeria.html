@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="pt-AO">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Galeria de fotos do ITEL — Momentos, eventos e conquistas do Instituto de Telecomunicações." />
+  <title>ITEL — Galeria</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/index.css" />
+  <style>
+    /* ── Herói interno ── */
+    .pag-heroi {
+      position: relative;
+      padding: clamp(7rem, 14vw, 11rem) 0 clamp(3rem, 6vw, 5rem);
+      overflow: hidden;
+      text-align: center;
+    }
+    .pag-heroi-fundo {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 100% 80% at 50% 0%, rgba(13,48,128,.6) 0%, transparent 70%),
+        url('assets/img/heroi-galeria-evento.jpg') center/cover no-repeat;
+      z-index: 0;
+    }
+    .pag-heroi-fundo::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(2,12,27,.45) 0%, rgba(2,12,27,.7) 60%, var(--azul-900) 100%);
+    }
+    .pag-heroi-grade {
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(circle, rgba(255,255,255,.05) 1px, transparent 1px);
+      background-size: 36px 36px;
+      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black, transparent);
+      z-index: 1;
+    }
+    .pag-heroi-conteudo {
+      position: relative;
+      z-index: 2;
+    }
+    .pag-migalha {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      font-size: .78rem;
+      color: rgba(168,200,255,.55);
+      margin-bottom: 1.2rem;
+    }
+    .pag-migalha a { color: rgba(168,200,255,.55); transition: var(--trans); }
+    .pag-migalha a:hover { color: var(--branco); }
+    .pag-migalha-sep { opacity: .4; }
+    .pag-migalha-actual { color: var(--azul-100); font-weight: 600; }
+    .pag-heroi-titulo {
+      font-family: var(--fonte-display);
+      font-size: clamp(2.2rem, 5vw, 4rem);
+      font-weight: 800;
+      color: var(--branco);
+      line-height: 1.08;
+      margin-bottom: .9rem;
+    }
+    .pag-heroi-titulo span {
+      background: linear-gradient(135deg, var(--azul-200) 0%, var(--azul-50) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .pag-heroi-desc {
+      font-size: clamp(.9rem, 1.6vw, 1.05rem);
+      color: rgba(168,200,255,.65);
+      max-width: 500px;
+      margin-inline: auto;
+      font-weight: 400;
+      line-height: 1.7;
+    }
+
+    /* ── Estatísticas ── */
+    .galeria-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%,140px), 1fr));
+      gap: clamp(.7rem, 2vw, 1rem);
+      margin-bottom: clamp(2rem, 4vw, 3rem);
+    }
+    .stat-card {
+      background: var(--vidro);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--vidro-borda);
+      border-radius: var(--raio-md);
+      padding: clamp(1rem, 3vw, 1.5rem);
+      text-align: center;
+      transition: var(--trans);
+    }
+    .stat-card:hover {
+      background: var(--vidro-hover);
+      transform: translateY(-3px);
+      border-color: rgba(91,147,245,.25);
+    }
+    .stat-numero {
+      font-family: var(--fonte-display);
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--branco), var(--azul-200));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
+      margin-bottom: .3rem;
+    }
+    .stat-label { font-size: .78rem; color: rgba(168,200,255,.5); }
+
+    /* ── Filtros ── */
+    .galeria-filtros {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: .5rem;
+      flex-wrap: wrap;
+      padding-block: clamp(1.5rem, 3vw, 2.5rem);
+    }
+    .filtro-btn {
+      background: var(--vidro);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--vidro-borda);
+      border-radius: var(--raio-full);
+      padding: .5rem clamp(.9rem, 2vw, 1.3rem);
+      color: rgba(168,200,255,.65);
+      font-family: var(--fonte-display);
+      font-weight: 700;
+      font-size: clamp(.75rem, 1.4vw, .84rem);
+      cursor: pointer;
+      transition: var(--trans);
+      white-space: nowrap;
+    }
+    .filtro-btn:hover, .filtro-btn.activo {
+      background: linear-gradient(135deg, var(--azul-500), var(--azul-400));
+      border-color: transparent;
+      color: var(--branco);
+      box-shadow: var(--sombra-azul);
+      transform: translateY(-2px);
+    }
+
+    /* ── Grade masonry ── */
+    .galeria-grade {
+      columns: 3;
+      column-gap: clamp(.8rem, 2vw, 1.2rem);
+    }
+    @media (max-width: 900px) { .galeria-grade { columns: 2; } }
+    @media (max-width: 500px) { .galeria-grade { columns: 1; } }
+
+    .galeria-item {
+      break-inside: avoid;
+      margin-bottom: clamp(.8rem, 2vw, 1.2rem);
+      border-radius: var(--raio-md);
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+      transition: var(--trans-lenta);
+      border: 1px solid var(--vidro-borda);
+    }
+    .galeria-item:hover {
+      transform: scale(1.02);
+      border-color: rgba(91,147,245,.3);
+      box-shadow: 0 20px 50px rgba(0,0,0,.5);
+    }
+    .galeria-item img {
+      width: 100%;
+      display: block;
+      transition: transform .6s ease;
+    }
+    .galeria-item:hover img { transform: scale(1.06); }
+
+    .galeria-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 40%, rgba(2,12,27,.92) 100%);
+      opacity: 0;
+      transition: opacity .4s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 1.2rem;
+    }
+    .galeria-item:hover .galeria-overlay { opacity: 1; }
+
+    .galeria-item-cat {
+      display: inline-block;
+      background: rgba(46,109,232,.18);
+      border: 1px solid rgba(91,147,245,.3);
+      color: var(--azul-100);
+      font-size: .67rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      padding: .24rem .65rem;
+      border-radius: var(--raio-full);
+      margin-bottom: .5rem;
+      align-self: flex-start;
+    }
+    .galeria-item-titulo {
+      font-family: var(--fonte-display);
+      font-weight: 700;
+      font-size: .92rem;
+      color: var(--branco);
+      line-height: 1.3;
+      margin-bottom: .25rem;
+    }
+    .galeria-item-data { font-size: .73rem; color: rgba(255,255,255,.45); }
+
+    .galeria-zoom {
+      position: absolute;
+      top: .85rem;
+      right: .85rem;
+      width: 32px;
+      height: 32px;
+      background: rgba(255,255,255,.1);
+      backdrop-filter: blur(10px);
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      opacity: 0;
+      transition: var(--trans);
+    }
+    .galeria-item:hover .galeria-zoom { opacity: 1; transform: scale(1.1); }
+    .galeria-zoom svg { width: 15px; height: 15px; color: var(--branco); }
+
+    /* ── Lightbox ── */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      background: rgba(2,12,27,.97);
+      backdrop-filter: blur(30px);
+      z-index: 2000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .4s ease;
+      padding: 1.5rem;
+    }
+    .lightbox.aberto { opacity: 1; pointer-events: all; }
+    .lightbox-inner {
+      position: relative;
+      max-width: 900px;
+      width: 100%;
+      transform: scale(.92);
+      transition: transform .4s cubic-bezier(.25,.46,.45,.94);
+    }
+    .lightbox.aberto .lightbox-inner { transform: scale(1); }
+    .lightbox-img {
+      width: 100%;
+      border-radius: var(--raio-lg);
+      display: block;
+      box-shadow: 0 40px 80px rgba(0,0,0,.7);
+      border: 1px solid var(--vidro-borda);
+      transition: opacity .3s ease;
+    }
+    .lightbox-info {
+      margin-top: 1rem;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .lightbox-titulo { font-family: var(--fonte-display); font-size: 1.1rem; font-weight: 700; color: var(--branco); }
+    .lightbox-sub { font-size: .8rem; color: rgba(168,200,255,.5); margin-top: .2rem; }
+    .lightbox-fechar {
+      position: absolute;
+      top: -14px; right: -14px;
+      width: 38px; height: 38px;
+      background: rgba(255,255,255,.08);
+      border: 1px solid var(--vidro-borda2);
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      color: var(--branco);
+      font-size: 1rem;
+      transition: var(--trans);
+    }
+    .lightbox-fechar:hover { background: rgba(255,80,80,.2); border-color: rgba(255,80,80,.4); }
+    .lightbox-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 42px; height: 42px;
+      background: rgba(255,255,255,.07);
+      border: 1px solid var(--vidro-borda);
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      color: var(--branco);
+      transition: var(--trans);
+    }
+    .lightbox-nav:hover { background: rgba(46,109,232,.2); border-color: rgba(91,147,245,.3); }
+    .lightbox-ant { left: -22px; }
+    .lightbox-prox { right: -22px; }
+    @media (max-width: 600px) {
+      .lightbox-ant { left: 6px; }
+      .lightbox-prox { right: 6px; }
+      .lightbox-fechar { top: -10px; right: -6px; }
+    }
+    .lightbox-nav svg { width: 17px; height: 17px; }
+    .lightbox-contador {
+      display: inline-flex;
+      align-items: center;
+      gap: .45rem;
+      background: var(--vidro);
+      border: 1px solid var(--vidro-borda);
+      border-radius: var(--raio-full);
+      padding: .28rem .85rem;
+      font-size: .76rem;
+      color: rgba(168,200,255,.55);
+      white-space: nowrap;
+    }
+
+    /* ── Álbuns ── */
+    .secao-albuns { padding-block: var(--secao-py); }
+    .albuns-grade {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+      gap: clamp(1rem, 2.5vw, 1.4rem);
+    }
+    .album-card {
+      border-radius: var(--raio-md);
+      overflow: hidden;
+      background: var(--vidro);
+      border: 1px solid var(--vidro-borda);
+      cursor: pointer;
+      transition: var(--trans-lenta);
+      transform-style: preserve-3d;
+    }
+    .album-card:hover {
+      transform: translateY(-8px);
+      border-color: rgba(91,147,245,.3);
+      box-shadow: var(--sombra-lg);
+    }
+    .album-fotos {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: clamp(90px,14vw,120px) clamp(60px,9vw,80px);
+      gap: 3px;
+    }
+    .album-foto-principal { grid-row: 1/3; overflow: hidden; }
+    .album-foto-sec { overflow: hidden; }
+    .album-foto-mais {
+      overflow: hidden;
+      background: rgba(13,48,128,.5);
+      display: grid;
+      place-items: center;
+    }
+    .album-foto-mais::after {
+      content: attr(data-mais);
+      font-family: var(--fonte-display);
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--azul-100);
+    }
+    .album-foto-principal img,
+    .album-foto-sec img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform .5s ease;
+    }
+    .album-card:hover .album-foto-principal img,
+    .album-card:hover .album-foto-sec img { transform: scale(1.07); }
+    .album-corpo { padding: clamp(1rem, 2.5vw, 1.3rem) clamp(1rem, 2.5vw, 1.4rem); }
+    .album-titulo {
+      font-family: var(--fonte-display);
+      font-weight: 700;
+      font-size: clamp(.9rem, 1.8vw, 1rem);
+      color: var(--branco);
+      margin-bottom: .3rem;
+    }
+    .album-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: .76rem;
+      color: rgba(168,200,255,.45);
+      flex-wrap: wrap;
+      gap: .4rem;
+    }
+    .album-contagem {
+      display: inline-flex;
+      align-items: center;
+      gap: .3rem;
+      background: rgba(46,109,232,.1);
+      border: 1px solid rgba(91,147,245,.2);
+      border-radius: var(--raio-full);
+      padding: .2rem .65rem;
+      color: var(--azul-100);
+      font-weight: 600;
+      font-size: .72rem;
+    }
+
+    /* ── Paginação ── */
+    .paginacao {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: .45rem;
+      padding-top: clamp(2rem, 4vw, 3rem);
+      flex-wrap: wrap;
+    }
+    .pag-btn {
+      width: 38px; height: 38px;
+      border-radius: var(--raio-sm);
+      background: var(--vidro);
+      border: 1px solid var(--vidro-borda);
+      color: rgba(168,200,255,.55);
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      font-family: var(--fonte-display);
+      font-weight: 700;
+      font-size: .82rem;
+      transition: var(--trans);
+    }
+    .pag-btn:hover, .pag-btn.activo {
+      background: linear-gradient(135deg, var(--azul-500), var(--azul-400));
+      border-color: transparent;
+      color: var(--branco);
+      box-shadow: var(--sombra-azul);
+    }
+    .pag-sep { color: rgba(168,200,255,.35); font-size: .82rem; padding: 0 .25rem; }
+  </style>
+</head>
+<body>
+
+  <!-- NAVEGAÇÃO -->
+  <header>
+    <nav class="navegacao rolada" id="barra-nav">
+      <div class="container">
+        <div class="nav-interior">
+          <a href="index.html" class="nav-logo">
+            <div class="nav-logo-icone">IT</div>
+            <div class="nav-logo-txt">
+              <span class="nav-logo-nome">ITEL</span>
+              <span class="nav-logo-sub">Instituto de Telecomunicações</span>
+            </div>
+          </a>
+          <ul class="nav-links" role="list">
+            <li><a href="../index.html#cursos">Cursos</a></li>
+            <li><a href="../index.html#sobre">Sobre</a></li>
+            <li><a href="itel actividades.html">Actividades</a></li>
+            <li><a href="itel directores.html">Ex‑Directores</a></li>
+            <li><a href="noticias.html">Notícias</a></li>
+            <li><a href="galeria.html"  style="color:var(--branco)">Galeria</a></li>
+            <li><a href="../index.html#rodape">Contactos</a></li>
+            <li><a href="login.html" class="nav-cta">Portal do Aluno</a></li>
+          </ul>
+          <button class="nav-hamburguer" id="btn-menu" aria-label="Abrir menu" aria-expanded="false">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <nav class="menu-mobile" id="menu-mobile" aria-hidden="true">
+    <button class="menu-fechar" id="btn-fechar" aria-label="Fechar menu">✕</button>
+    <a href="index.html#cursos"  onclick="fecharMenu()">Cursos</a>
+    <a href="index.html#sobre"   onclick="fecharMenu()">Sobre</a>
+    <a href="noticias.html" onclick="fecharMenu()">Notícias</a>
+    <a href="galeria.html"  onclick="fecharMenu()">Galeria</a>
+    <a href="index.html#rodape"  onclick="fecharMenu()">Contactos</a>
+    <a href="itel-login.html" class="btn-primario" onclick="fecharMenu()">Portal do Aluno</a>
+  </nav>
+
+  <main>
+    <!-- HERÓI -->
+    <section class="pag-heroi">
+      <div class="pag-heroi-fundo" aria-hidden="true"></div>
+      <div class="pag-heroi-grade"  aria-hidden="true"></div>
+      <div class="container pag-heroi-conteudo">
+        <nav class="pag-migalha" aria-label="Caminho de navegação">
+          <a href="../index.html">Início</a>
+          <span class="pag-migalha-sep">›</span>
+          <span class="pag-migalha-actual">Galeria</span>
+        </nav>
+        <h1 class="pag-heroi-titulo">Nossa <span>Galeria</span></h1>
+        <p class="pag-heroi-desc">Momentos, eventos e conquistas que contam a história do ITEL e dos seus estudantes ao longo dos anos.</p>
+      </div>
+    </section>
+
+    <!-- CORPO -->
+    <section style="padding-block: clamp(3rem,6vw,5rem) 0; position:relative; z-index:1;">
+      <div class="container">
+
+        <!-- Estatísticas -->
+        <div class="galeria-stats animar-entrada">
+          <div class="stat-card"><div class="stat-numero">348</div><div class="stat-label">Fotografias</div></div>
+          <div class="stat-card"><div class="stat-numero">24</div><div class="stat-label">Álbuns</div></div>
+          <div class="stat-card"><div class="stat-numero">12</div><div class="stat-label">Eventos</div></div>
+          <div class="stat-card"><div class="stat-numero">6</div><div class="stat-label">Anos de registo</div></div>
+        </div>
+
+        <!-- Filtros -->
+        <div class="galeria-filtros animar-entrada">
+          <button class="filtro-btn activo" onclick="filtrar(this,'todos')">Todos</button>
+          <button class="filtro-btn" onclick="filtrar(this,'eventos')">Eventos</button>
+          <button class="filtro-btn" onclick="filtrar(this,'formatura')">Formaturas</button>
+          <button class="filtro-btn" onclick="filtrar(this,'fititel')">FITITEL</button>
+          <button class="filtro-btn" onclick="filtrar(this,'instalacoes')">Instalações</button>
+          <button class="filtro-btn" onclick="filtrar(this,'atividades')">Actividades</button>
+        </div>
+
+        <!-- Grade -->
+        <div class="galeria-grade" id="galeria-grade">
+
+          <article class="galeria-item animar-entrada" data-cat="eventos" data-titulo="Cerimónia de Abertura 2024" data-data="Janeiro 2024" onclick="abrirLightbox(0)">
+            <img src="assets/img/heroi-galeria-evento.jpg" alt="Cerimónia de abertura" loading="lazy" style="height:280px;object-fit:cover"/>
+            <div class="galeria-overlay">
+              <span class="galeria-item-cat">Evento</span>
+              <h3 class="galeria-item-titulo">Cerimónia de Abertura 2024</h3>
+              <p class="galeria-item-data">Janeiro 2024</p>
+            </div>
+            <div class="galeria-zoom"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M5 8a3 3 0 116 0A3 3 0 015 8zm8.293 7.293l-2.39-2.39A5.5 5.5 0 1114.5 8a5.48 5.48 0 01-1.183 3.414l2.39 2.39a1 1 0 01-1.414 1.414z"/></svg></div>
+          </article>
+
+          <article class="galeria-item animar-entrada atraso-1" data-cat="formatura" data-titulo="Formatura Turma 2023" data-data="Julho 2023" onclick="abrirLightbox(1)">
+            <img src="assets/img/galeria-formatura-turma.jpg" alt="Formatura 2023" loading="lazy" style="height:200px;object-fit:cover"/>
+            <div class="galeria-overlay">
+              <span class="galeria-item-cat">Formatura</span>
+              <h3 class="galeria-item-titulo">Formatura Turma 2023</h3>
+              <p class="galeria-item-data">Julho 2023</p>
+            </div>
+            <div class="galeria-zoom"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M5 8a3 3 0 116 0A3 3 0 015 8zm8.293 7.293l-2.39-2.39A5.5 5.5 0 1114.5 8a5.48 5.48 0 01-1.183 3.414l2.39 2.39a1 1 0 01-1.414 1.414z"/></svg></div>
+          </article>
+
+          <article class="galeria-item animar-entrada atraso-2" data-cat="fititel" data-titulo="FITITEL 2024 — Stands" data-data="Outubro 2024" onclick="abrirLightbox(2)">
+            <img src="assets/img/galeria-fititel-stands.jpg" alt="FITITEL stands" loading="lazy" style="height:340px;object-fit:cover"/>
+            <div class="galeria-overlay">
+              <span class="galeria-item-cat">FITITEL</span>
+              <h3 class="galeria-item-titulo">FITITEL 2024 — Stands</h3>
+              <p class="galeria-item-data">Outubro 2024</p>
+            </div>
+            <div class="galeria-zoom"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M5 8a3 3 0 116 0A3 3 0 015 8zm8.293 7.293l-2.39-2.39A5.5 5.5 0 1114.5 8a5.48 5.48 0 01-1.183 3.414l2.39 2.39a1 1 0 01-1.414 1.414z"/></svg></div>
+          </article>
+
+          <article class="galeria-item animar-entrada" data-cat="instalacoes" data-titulo="Laboratório de Informática" data-data="2024" onclick="abrirLightbox(3)">
+            <img src="assets/img/curso-informatica.jpg" alt="Laboratório" loading="lazy" style="height:220px;object-fit:cover"/>
+            <div class="galeria-overlay">
+              <span class="galeria-item-cat">Instalações</span>
+              <h3 class="galeria-item-titulo">Laboratório de Informática</h3>
+              <p class="galeria-item-data">2024</p>
+            </div>
+            <div class="galeria-zoom"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M5 8a3 3 0 116 0A3 3 0 015 8zm8.293 7.293l-2.39-2.39A5.5 5.5 0 1114.5 8a5.48 5.48 0 01-1.183 3.414l2.39 2.39a1 1 0 01-1.414 1.414z"/></svg></div>
+          </article>
+
+          <article class="galeria-item animar-entrada atraso-1" data-cat="atividades" data-titulo="Workshop de Redes" data-data="Março 2024" onclick="abrirLightbox(4)">
+            <img src="assets/img/curso-electronica-telecomunicacoes.jpg" alt="Workshop" loading="lazy" style="height:260px;object-fit:cover"/>
+            <div class="galeria-overlay">
+              <span class="galeria-item-cat">Actividades</span>
+              <h3 class="galeria-item-titulo">Workshop de Redes e Telecomunicações</h3>
+              <p class="galeria-item-data">Março 2024</p>
+            </div>
+            <div class="galeria-zoom"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M5 8a3 3 0 116 0A3 3 0 015 8zm8.293 7.293l-2.39-2.39A5.5 5.5 0 1114.5 8a5.48 5.48 0 01-1.183 3.414l2.39 2.39a1 1 0 01-1.414 1.414z"/></svg></div>
+          </article>
+
+          <article class="galeria-item animar-entrada atraso-2" data-cat="formatura" data-titulo="Graduados 2022" data-data="Junho 2022" onclick="abrirLightbox(5)">
+            <img src="assets/img/galeria-graduados-cerimonia.jpg" alt="Graduados" loading="lazy" style="height:180px;object-fit:cover"/>
+            <div class="galeria-overlay">
+              <span class="galeria-item-cat">Formatura</span>
+              <h3 class="galeria-item-titulo">Graduados 2022</h3>
+              <p class="galeria-item-data">Junho 2022</p>
+            </div>
+            <div class="galeria-zoom"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M5 8a3 3 0 116 0A3 3 0 015 8zm8.293 7.293l-2.39-2.39A5.5 5.5 0 1114.5 8a5.48 5.48 0 01-1.183 3.414l2.39 2.39a1 1 0 01-1.414 1.414z"/></svg></div>
+          </article>
+
+          <article class="galeria-item animar-entrada" data-cat="fititel" data-titulo="FITITEL — Palco Principal" data-data="Outubro 2023" onclick="abrirLightbox(6)">
+            <img src="assets/img/galeria-fititel-palco-principal.jpg" alt="FITITEL palco" loading="lazy" style="height:310px;object-fit:cover"/>
+            <div class="galeria-overlay">
+              <span class="galeria-item-cat">FITITEL</span>
+              <h3 class="galeria-item-titulo">FITITEL — Palco Principal</h3>
+              <p class="galeria-item-data">Outubro 2023</p>
+            </div>
+            <div class="galeria-zoom"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M5 8a3 3 0 116 0A3 3 0 015 8zm8.293 7.293l-2.39-2.39A5.5 5.5 0 1114.5 8a5.48 5.48 0 01-1.183 3.414l2.39 2.39a1 1 0 01-1.414 1.414z"/></svg></div>
+          </article>
+
+          <article class="galeria-item animar-entrada atraso-1" data-cat="instalacoes" data-titulo="Biblioteca Técnica" data-data="2024" onclick="abrirLightbox(7)">
+            <img src="assets/img/galeria-biblioteca-tecnica.jpg" alt="Biblioteca" loading="lazy" style="height:230px;object-fit:cover"/>
+            <div class="galeria-overlay">
+              <span class="galeria-item-cat">Instalações</span>
+              <h3 class="galeria-item-titulo">Biblioteca Técnica</h3>
+              <p class="galeria-item-data">2024</p>
+            </div>
+            <div class="galeria-zoom"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M5 8a3 3 0 116 0A3 3 0 015 8zm8.293 7.293l-2.39-2.39A5.5 5.5 0 1114.5 8a5.48 5.48 0 01-1.183 3.414l2.39 2.39a1 1 0 01-1.414 1.414z"/></svg></div>
+          </article>
+
+          <article class="galeria-item animar-entrada atraso-2" data-cat="atividades" data-titulo="Aula Prática de Electrónica" data-data="Fevereiro 2024" onclick="abrirLightbox(8)">
+            <img src="assets/img/galeria-aula-pratica-electronica.jpg" alt="Aula electrónica" loading="lazy" style="height:200px;object-fit:cover"/>
+            <div class="galeria-overlay">
+              <span class="galeria-item-cat">Actividades</span>
+              <h3 class="galeria-item-titulo">Aula Prática de Electrónica</h3>
+              <p class="galeria-item-data">Fevereiro 2024</p>
+            </div>
+            <div class="galeria-zoom"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M5 8a3 3 0 116 0A3 3 0 015 8zm8.293 7.293l-2.39-2.39A5.5 5.5 0 1114.5 8a5.48 5.48 0 01-1.183 3.414l2.39 2.39a1 1 0 01-1.414 1.414z"/></svg></div>
+          </article>
+
+        </div>
+
+        <div class="paginacao animar-entrada">
+          <button class="pag-btn"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" width="13"><path d="M10 4L6 8l4 4"/></svg></button>
+          <button class="pag-btn activo">1</button>
+          <button class="pag-btn">2</button>
+          <button class="pag-btn">3</button>
+          <span class="pag-sep">…</span>
+          <button class="pag-btn">8</button>
+          <button class="pag-btn"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" width="13"><path d="M6 4l4 4-4 4"/></svg></button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ÁLBUNS -->
+    <section class="secao-albuns" style="position:relative;z-index:1;">
+      <div class="container">
+        <header class="secao-cabecalho">
+          <div class="secao-etiqueta">Colecções</div>
+          <div class="linha-deco animar-entrada"><div class="linha-deco-centro"></div></div>
+          <h2 class="secao-titulo animar-entrada">Álbuns em <span>Destaque</span></h2>
+        </header>
+        <div class="albuns-grade">
+
+          <article class="album-card animar-entrada atraso-1">
+            <div class="album-fotos">
+              <div class="album-foto-principal"><img src="assets/img/heroi-galeria-evento.jpg" alt=""/></div>
+              <div class="album-foto-sec"><img src="assets/img/galeria-formatura-turma.jpg" alt=""/></div>
+              <div class="album-foto-mais" data-mais="+18"></div>
+            </div>
+            <div class="album-corpo">
+              <h3 class="album-titulo">FITITEL 2024</h3>
+              <div class="album-meta">
+                <span>Outubro 2024</span>
+                <span class="album-contagem">📷 22 fotos</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="album-card animar-entrada atraso-2">
+            <div class="album-fotos">
+              <div class="album-foto-principal"><img src="assets/img/galeria-formatura-turma.jpg" alt=""/></div>
+              <div class="album-foto-sec"><img src="assets/img/galeria-graduados-cerimonia.jpg" alt=""/></div>
+              <div class="album-foto-mais" data-mais="+31"></div>
+            </div>
+            <div class="album-corpo">
+              <h3 class="album-titulo">Formatura 2023</h3>
+              <div class="album-meta">
+                <span>Julho 2023</span>
+                <span class="album-contagem">📷 35 fotos</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="album-card animar-entrada atraso-3">
+            <div class="album-fotos">
+              <div class="album-foto-principal"><img src="assets/img/curso-electronica-telecomunicacoes.jpg" alt=""/></div>
+              <div class="album-foto-sec"><img src="assets/img/galeria-aula-pratica-electronica.jpg" alt=""/></div>
+              <div class="album-foto-mais" data-mais="+12"></div>
+            </div>
+            <div class="album-corpo">
+              <h3 class="album-titulo">Workshops 2024</h3>
+              <div class="album-meta">
+                <span>Vários</span>
+                <span class="album-contagem">📷 16 fotos</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="album-card animar-entrada atraso-4">
+            <div class="album-fotos">
+              <div class="album-foto-principal"><img src="assets/img/curso-informatica.jpg" alt=""/></div>
+              <div class="album-foto-sec"><img src="assets/img/galeria-biblioteca-tecnica.jpg" alt=""/></div>
+              <div class="album-foto-mais" data-mais="+8"></div>
+            </div>
+            <div class="album-corpo">
+              <h3 class="album-titulo">Instalações ITEL</h3>
+              <div class="album-meta">
+                <span>2024</span>
+                <span class="album-contagem">📷 12 fotos</span>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Visualizador de imagem">
+    <div class="lightbox-inner">
+      <button class="lightbox-fechar" onclick="fecharLightbox()" aria-label="Fechar">✕</button>
+      <button class="lightbox-nav lightbox-ant" onclick="navLightbox(-1)" aria-label="Anterior">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 4L6 8l4 4"/></svg>
+      </button>
+      <button class="lightbox-nav lightbox-prox" onclick="navLightbox(1)" aria-label="Próximo">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 4l4 4-4 4"/></svg>
+      </button>
+      <img class="lightbox-img" id="lb-img" src="" alt=""/>
+      <div class="lightbox-info">
+        <div>
+          <p class="lightbox-titulo" id="lb-titulo"></p>
+          <p class="lightbox-sub"   id="lb-data"></p>
+        </div>
+        <div class="lightbox-contador">
+          <span id="lb-actual">1</span>
+          <span style="opacity:.4">/</span>
+          <span id="lb-total">9</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RODAPÉ -->
+  <footer class="rodape" style="padding-top:2rem">
+    <div class="container">
+      <div class="rodape-divisor"></div>
+      <div class="rodape-base" style="justify-content:center;flex-direction:column;align-items:center;gap:.5rem">
+        <p class="rodape-copyright">© 2025 Instituto de Telecomunicações — ITEL. Todos os direitos reservados.</p>
+        <nav class="rodape-legais">
+          <a href="#">Termos de Uso</a>
+          <a href="#">Privacidade</a>
+          <a href="index.html">Página Principal</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+  <button class="voltar-topo" id="btn-topo" aria-label="Voltar ao topo">↑</button>
+
+<script>  
+    'use strict';
+    // Menu mobile
+    const menuMobile = document.getElementById('menu-mobile');
+    const btnMenu    = document.getElementById('btn-menu');
+    btnMenu.addEventListener('click', () => {
+      menuMobile.classList.add('aberto');
+      menuMobile.setAttribute('aria-hidden','false');
+      btnMenu.setAttribute('aria-expanded','true');
+      document.body.style.overflow = 'hidden';
+    });
+    document.getElementById('btn-fechar').addEventListener('click', fecharMenu);
+    function fecharMenu() {
+      menuMobile.classList.remove('aberto');
+      menuMobile.setAttribute('aria-hidden','true');
+      btnMenu.setAttribute('aria-expanded','false');
+      document.body.style.overflow = '';
+    }
+    document.addEventListener('keydown', e => { if (e.key==='Escape' && menuMobile.classList.contains('aberto')) fecharMenu(); });
+
+    // Voltar ao topo
+    const btnTopo = document.getElementById('btn-topo');
+    window.addEventListener('scroll', () => btnTopo.classList.toggle('visivel', scrollY>400), {passive:true});
+    btnTopo.addEventListener('click', () => scrollTo({top:0,behavior:'smooth'}));
+
+    // Animações
+    const obs = new IntersectionObserver(es => es.forEach(e => { if(e.isIntersecting){e.target.classList.add('visivel');obs.unobserve(e.target);}}),{threshold:.1});
+    document.querySelectorAll('.animar-entrada').forEach(el => obs.observe(el));
+
+    // Filtros
+    function filtrar(btn, cat) {
+      document.querySelectorAll('.filtro-btn').forEach(b => b.classList.remove('activo'));
+      btn.classList.add('activo');
+      document.querySelectorAll('.galeria-item').forEach(item => {
+        const ok = cat==='todos' || item.dataset.cat===cat;
+        item.style.opacity       = ok ? '1' : '0.15';
+        item.style.transform     = ok ? '' : 'scale(0.95)';
+        item.style.pointerEvents = ok ? 'all' : 'none';
+        item.style.transition    = 'opacity .4s ease, transform .4s ease';
+      });
+    }
+
+    // Lightbox
+    const fotos = [...document.querySelectorAll('.galeria-item')].map(el => ({
+      src   : el.querySelector('img').src,
+      titulo: el.dataset.titulo,
+      data  : el.dataset.data,
+    }));
+    let idxActual = 0;
+
+    function abrirLightbox(i) {
+      idxActual = i;
+      actualizarLb();
+      document.getElementById('lightbox').classList.add('aberto');
+      document.body.style.overflow = 'hidden';
+    }
+    function fecharLightbox() {
+      document.getElementById('lightbox').classList.remove('aberto');
+      document.body.style.overflow = '';
+    }
+    function navLightbox(dir) {
+      idxActual = (idxActual + dir + fotos.length) % fotos.length;
+      actualizarLb();
+    }
+    function actualizarLb() {
+      const img = document.getElementById('lb-img');
+      img.style.opacity = '0';
+      setTimeout(() => { img.src = fotos[idxActual].src; img.alt = fotos[idxActual].titulo; img.style.opacity='1'; img.style.transition='opacity .3s ease'; }, 130);
+      document.getElementById('lb-titulo').textContent = fotos[idxActual].titulo;
+      document.getElementById('lb-data').textContent   = fotos[idxActual].data;
+      document.getElementById('lb-actual').textContent = idxActual + 1;
+      document.getElementById('lb-total').textContent  = fotos.length;
+    }
+    document.getElementById('lightbox').addEventListener('click', e => { if(e.target===document.getElementById('lightbox')) fecharLightbox(); });
+    document.addEventListener('keydown', e => {
+      if (!document.getElementById('lightbox').classList.contains('aberto')) return;
+      if (e.key==='Escape')     fecharLightbox();
+      if (e.key==='ArrowRight') navLightbox(1);
+      if (e.key==='ArrowLeft')  navLightbox(-1);
+    });
+
+    // 3D tilt nos álbuns (apenas desktop)
+    if (window.matchMedia('(hover:hover) and (pointer:fine)').matches) {
+      document.querySelectorAll('.album-card').forEach(card => {
+        card.addEventListener('mousemove', e => {
+          const r=card.getBoundingClientRect();
+          const dx=(e.clientX-r.left-r.width/2)/(r.width/2);
+          const dy=(e.clientY-r.top-r.height/2)/(r.height/2);
+          card.style.transform=`translateY(-8px) rotateX(${-dy*4}deg) rotateY(${dx*4}deg)`;
+        });
+        card.addEventListener('mouseleave',()=>{card.style.transform='';});
+      });
+    }
+  </script>
+</body>
+</html>
