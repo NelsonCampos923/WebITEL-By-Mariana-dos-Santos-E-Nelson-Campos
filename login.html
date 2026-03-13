@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="pt-AO">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Portal do Aluno ITEL — Acede às tuas notas, horários e comunicados." />
+  <title>ITEL — Portal do Aluno</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/index.css"/>
+  <style>
+    /* ── Fundo ── */
+    .login-fundo {
+      position: fixed; inset: 0; z-index: 0;
+      background: var(--azul-900);
+    }
+    .login-fundo-grade {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(46,109,232,.07) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(46,109,232,.07) 1px, transparent 1px);
+      background-size: 56px 56px;
+      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%);
+    }
+    .login-orb {
+      position: absolute; border-radius: 50%;
+      filter: blur(90px); pointer-events: none;
+      animation: loginOrb 10s ease-in-out infinite;
+    }
+    .login-orb-1 {
+      width: clamp(300px,50vw,600px); height: clamp(300px,50vw,600px);
+      background: radial-gradient(circle, rgba(13,48,128,.55), transparent 70%);
+      top: -15%; left: -10%; animation-delay: 0s;
+    }
+    .login-orb-2 {
+      width: clamp(200px,35vw,480px); height: clamp(200px,35vw,480px);
+      background: radial-gradient(circle, rgba(46,109,232,.22), transparent 70%);
+      bottom: -8%; right: -8%; animation-delay: -4s;
+    }
+    .login-orb-3 {
+      width: clamp(150px,25vw,340px); height: clamp(150px,25vw,340px);
+      background: radial-gradient(circle, rgba(91,147,245,.12), transparent 70%);
+      top: 40%; left: 55%; animation-delay: -7s;
+    }
+    @keyframes loginOrb {
+      0%,100% { transform: translate(0,0) scale(1); }
+      35%  { transform: translate(35px,-45px) scale(1.05); }
+      65%  { transform: translate(-22px,25px) scale(0.96); }
+    }
+    .login-particula {
+      position: absolute; border-radius: 50%;
+      border: 1px solid rgba(91,147,245,.1); pointer-events: none;
+      animation: particulaSubir linear infinite;
+    }
+    @keyframes particulaSubir {
+      0%   { transform: translateY(0) rotate(0deg); opacity: 0; }
+      10%  { opacity: 1; }
+      90%  { opacity: 1; }
+      100% { transform: translateY(-100vh) rotate(720deg); opacity: 0; }
+    }
+
+    /* ── Layout principal ── */
+    .pagina-login {
+      min-height: 100svh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .login-layout {
+      width: 100%;
+      max-width: 980px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: clamp(540px, 70vh, 660px);
+      border-radius: var(--raio-xl);
+      overflow: hidden;
+      box-shadow:
+        0 40px 80px rgba(0,0,0,.55),
+        0 0 0 1px rgba(255,255,255,.07),
+        inset 0 1px 0 rgba(255,255,255,.09);
+    }
+
+    /* ── Painel esquerdo ── */
+    .login-painel-esq {
+      background:
+        radial-gradient(ellipse 120% 100% at 0% 0%, rgba(13,48,128,.92), rgba(2,12,27,.97)),
+        url('assets/img/heroi-fundo-tecnologia.jpg') center/cover no-repeat;
+      padding: clamp(2.5rem,5vw,3.5rem);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+    }
+    .login-painel-esq::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(160deg, rgba(13,48,128,.88) 0%, rgba(4,15,36,.92) 50%, rgba(2,12,27,.98) 100%);
+    }
+    .login-painel-esq::after {
+      content: '';
+      position: absolute; top: -80px; right: -80px;
+      width: 280px; height: 280px;
+      background: radial-gradient(circle, rgba(91,147,245,.18), transparent 70%);
+      border-radius: 50%; pointer-events: none;
+    }
+    .lp-topo { position: relative; z-index: 1; }
+    .lp-rodape { position: relative; z-index: 1; }
+
+    .login-logo {
+      display: flex; align-items: center; gap: .8rem;
+      text-decoration: none; margin-bottom: clamp(2rem,4vw,2.8rem);
+    }
+    .login-logo-ic {
+      width: 46px; height: 46px;
+      background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.18);
+      border-radius: var(--raio-sm); display: grid; place-items: center;
+      font-family: var(--fonte-display); font-weight: 800; font-size: 1rem; color: var(--branco);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 20px rgba(0,0,0,.3), inset 0 1px 0 rgba(255,255,255,.14);
+      flex-shrink: 0;
+    }
+    .login-logo-nome {
+      font-family: var(--fonte-display); font-weight: 800;
+      font-size: 1.15rem; color: var(--branco); display: block; line-height: 1.1;
+    }
+    .login-logo-sub { font-size: .6rem; color: rgba(255,255,255,.45); letter-spacing: .04em; display: block; }
+
+    .login-painel-titulo {
+      font-family: var(--fonte-display);
+      font-size: clamp(1.7rem,3vw,2.5rem);
+      font-weight: 800; color: var(--branco); line-height: 1.1; margin-bottom: 1rem;
+    }
+    .login-painel-titulo span {
+      background: linear-gradient(135deg, var(--azul-200) 0%, var(--azul-50) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .login-painel-desc {
+      font-size: clamp(.86rem,1.5vw,.95rem); color: rgba(255,255,255,.55);
+      line-height: 1.72; max-width: 320px; font-weight: 400;
+    }
+
+    .login-beneficios {
+      list-style: none; display: flex; flex-direction: column; gap: .75rem;
+    }
+    .login-beneficio {
+      display: flex; align-items: center; gap: .65rem;
+      font-size: clamp(.8rem,1.4vw,.86rem); color: rgba(255,255,255,.65);
+    }
+    .login-beneficio-ic {
+      width: 28px; height: 28px; border-radius: var(--raio-sm);
+      background: rgba(46,109,232,.18); border: 1px solid rgba(91,147,245,.28);
+      display: grid; place-items: center; font-size: .8rem; flex-shrink: 0;
+    }
+
+    /* ── Painel direito (formulário) ── */
+    .login-painel-dir {
+      background: rgba(6,11,30,.93);
+      backdrop-filter: blur(40px) saturate(160%);
+      -webkit-backdrop-filter: blur(40px) saturate(160%);
+      border-left: 1px solid rgba(255,255,255,.06);
+      padding: clamp(2rem,4vw,3.5rem);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      overflow-y: auto;
+    }
+
+    /* Abas */
+    .login-abas {
+      display: flex;
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: var(--raio-sm);
+      padding: 4px; margin-bottom: clamp(1.8rem,3.5vw,2.5rem); gap: 4px;
+    }
+    .login-aba {
+      flex: 1; padding: .62rem; border-radius: calc(var(--raio-sm) - 2px);
+      border: none; background: transparent; color: rgba(168,200,255,.55);
+      font-family: var(--fonte-display); font-weight: 700; font-size: clamp(.8rem,1.4vw,.86rem);
+      cursor: pointer; transition: var(--trans); letter-spacing: .02em;
+    }
+    .login-aba.ativa {
+      background: linear-gradient(135deg, var(--azul-500), var(--azul-400));
+      color: var(--branco);
+      box-shadow: 0 4px 18px rgba(13,48,128,.5), inset 0 1px 0 rgba(255,255,255,.1);
+    }
+    .login-aba:not(.ativa):hover { color: var(--branco); background: rgba(255,255,255,.05); }
+
+    /* Título do form */
+    .login-form-titulo {
+      font-family: var(--fonte-display); font-size: clamp(1.3rem,2.5vw,1.55rem);
+      font-weight: 800; color: var(--branco); margin-bottom: .3rem;
+    }
+    .login-form-sub { font-size: .84rem; color: rgba(168,200,255,.5); margin-bottom: clamp(1.5rem,3vw,2rem); }
+
+    /* Painel forms */
+    .login-form-painel { display: none; }
+    .login-form-painel.ativo { display: block; animation: formEntrada .4s ease; }
+    @keyframes formEntrada {
+      from { opacity:0; transform: translateY(8px); }
+      to   { opacity:1; transform: translateY(0); }
+    }
+
+    /* Avisos */
+    .login-aviso {
+      display: none; align-items: center; gap: .65rem;
+      border-radius: var(--raio-sm); padding: .85rem 1.05rem;
+      font-size: .84rem; margin-bottom: 1.4rem;
+    }
+    .login-aviso.visivel { display: flex; animation: formEntrada .4s ease; }
+    .login-aviso-erro   { background: rgba(220,50,50,.1);   border: 1px solid rgba(220,50,50,.25);  color: #ff9090; }
+    .login-aviso-sucesso{ background: rgba(0,180,80,.1);    border: 1px solid rgba(0,180,80,.25);   color: #6fffb0; }
+
+    /* Campo */
+    .login-campo { margin-bottom: clamp(.9rem,2vw,1.2rem); }
+    .login-campo-label {
+      display: block; font-size: .73rem; font-weight: 700;
+      color: rgba(255,255,255,.55); letter-spacing: .07em; text-transform: uppercase; margin-bottom: .45rem;
+    }
+    .login-campo-wrap { position: relative; }
+    .login-campo-ic {
+      position: absolute; left: .95rem; top: 50%; transform: translateY(-50%);
+      color: rgba(168,200,255,.35); pointer-events: none;
+      display: grid; place-items: center; width: 18px; height: 18px;
+    }
+    .login-campo-ic svg { width: 16px; height: 16px; }
+    .login-input {
+      width: 100%; background: rgba(255,255,255,.05);
+      border: 1px solid var(--vidro-borda); border-radius: var(--raio-sm);
+      padding: .88rem 1rem .88rem 2.7rem; color: var(--branco);
+      font-size: clamp(.84rem,1.5vw,.9rem); font-family: var(--fonte-corpo);
+      
+    }
+    .login-input::placeholder { color: rgba(255,255,255,.2); }
+    .login-input:focus {
+      background: rgba(255,255,255,.08); border-color: rgba(91,147,245,.5);
+      box-shadow: 0 0 0 3px rgba(46,109,232,.12);
+    }
+    .campo-olho {
+      position: absolute; right: .9rem; top: 50%; transform: translateY(-50%);
+      background: none; border: none; color: rgba(168,200,255,.35);
+      cursor: pointer; padding: 0; display: grid; place-items: center; transition: var(--trans);
+    }
+    .campo-olho:hover { color: var(--azul-100); }
+    .campo-olho svg { width: 17px; height: 17px; }
+    .campo-erro {
+      font-size: .73rem; color: #ff9090; margin-top: .38rem;
+      display: none; align-items: center; gap: .28rem;
+    }
+    .campo-erro.visivel { display: flex; }
+
+    /* Opções (lembrar / esqueci) */
+    .login-opcoes {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: clamp(1.4rem,3vw,1.8rem); flex-wrap: wrap; gap: .5rem;
+    }
+    .login-checkbox-wrap { display: flex; align-items: center; gap: .5rem; cursor: pointer; }
+    .login-checkbox {
+      width: 16px; height: 16px; border-radius: 5px;
+      border: 1.5px solid rgba(255,255,255,.2); background: rgba(255,255,255,.05);
+      appearance: none; -webkit-appearance: none; cursor: pointer; transition: var(--trans); position: relative;
+    }
+    .login-checkbox:checked { background: linear-gradient(135deg, var(--azul-500), var(--azul-300)); border-color: transparent; }
+    .login-checkbox:checked::after { content:'✓'; position:absolute; inset:0; display:grid; place-items:center; font-size:.62rem; color:var(--branco); font-weight:700; }
+    .login-checkbox-txt { font-size: .8rem; color: rgba(168,200,255,.55); }
+    .login-esqueci { font-size: .8rem; color: var(--azul-200); text-decoration: none; font-weight: 500; transition: var(--trans); }
+    .login-esqueci:hover { color: var(--branco); }
+
+    /* Botão principal */
+    .login-btn-entrar {
+      width: 100%;
+      background: linear-gradient(135deg, var(--azul-500) 0%, var(--azul-400) 50%, var(--azul-300) 100%);
+      background-size: 200% 200%;
+      color: var(--branco); border: none;
+      border-radius: var(--raio-sm);
+      padding: clamp(.88rem,2vw,1rem);
+      font-family: var(--fonte-display); font-weight: 700;
+      font-size: clamp(.88rem,1.6vw,.95rem); letter-spacing: .03em;
+      cursor: pointer; transition: var(--trans);
+      position: relative; overflow: hidden;
+      box-shadow: 0 8px 28px rgba(13,48,128,.45), inset 0 1px 0 rgba(255,255,255,.14);
+      margin-bottom: 1.4rem;
+      display: flex; align-items: center; justify-content: center; gap: .55rem;
+    }
+    .login-btn-entrar:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 38px rgba(13,48,128,.65);
+      background-position: right center;
+    }
+    .login-btn-entrar:active { transform: translateY(0); }
+    .login-btn-entrar::before {
+      content: ''; position: absolute; top:0; left:-100%;
+      width: 60%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,.11), transparent);
+      transform: skewX(-20deg); transition: left .6s ease; pointer-events: none;
+    }
+    .login-btn-entrar:hover::before { left: 150%; }
+    .btn-spinner {
+      display: none; width: 17px; height: 17px;
+      border: 2px solid rgba(255,255,255,.3); border-top-color: var(--branco);
+      border-radius: 50%; animation: girar .7s linear infinite;
+    }
+    @keyframes girar { to { transform: rotate(360deg); } }
+    .login-btn-entrar.carregando .btn-txt  { display: none; }
+    .login-btn-entrar.carregando .btn-spinner { display: block; }
+
+    /* Divisor */
+    .login-divisor {
+      display: flex; align-items: center; gap: 1rem; margin-bottom: 1.4rem;
+    }
+    .login-divisor-linha { flex: 1; height: 1px; background: rgba(255,255,255,.07); }
+    .login-divisor-txt { font-size: .72rem; color: rgba(168,200,255,.4); letter-spacing: .07em; text-transform: uppercase; }
+
+    /* Botão social */
+    .login-btn-social {
+      width: 100%; background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.09); border-radius: var(--raio-sm);
+      padding: .82rem; color: rgba(255,255,255,.75);
+      font-family: var(--fonte-corpo); font-size: clamp(.82rem,1.5vw,.88rem); font-weight: 500;
+      cursor: pointer; transition: var(--trans);
+      display: flex; align-items: center; justify-content: center; gap: .65rem;
+      margin-bottom: .95rem;
+    }
+    .login-btn-social:hover { background: rgba(255,255,255,.08); border-color: rgba(255,255,255,.17); color: var(--branco); transform: translateY(-1px); }
+    .login-btn-social svg { width: 17px; height: 17px; flex-shrink: 0; }
+
+    /* Voltar */
+    .login-voltar {
+      display: inline-flex; align-items: center; gap: .4rem;
+      color: rgba(168,200,255,.4); text-decoration: none; font-size: .78rem;
+      transition: var(--trans); margin-top: 1.3rem;
+    }
+    .login-voltar:hover { color: var(--azul-100); }
+
+    /* Passos de registo */
+    .registo-passos {
+      display: flex; align-items: center; gap: .45rem; margin-bottom: clamp(1.3rem,2.5vw,1.6rem);
+      flex-wrap: nowrap; overflow-x: auto;
+    }
+    .registo-passo { display: flex; align-items: center; gap: .38rem; font-size: .73rem; color: rgba(168,200,255,.45); white-space: nowrap; }
+    .registo-passo-num {
+      width: 22px; height: 22px; border-radius: 50%;
+      background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1);
+      display: grid; place-items: center; font-size: .65rem; font-weight: 700; transition: var(--trans);
+    }
+    .registo-passo.ativo .registo-passo-num { background: linear-gradient(135deg, var(--azul-500), var(--azul-300)); border-color: transparent; color: var(--branco); }
+    .registo-passo.concluido .registo-passo-num { background: rgba(46,109,232,.18); border-color: rgba(91,147,245,.3); color: var(--azul-100); }
+    .registo-passo-linha { flex: 1; height: 1px; background: rgba(255,255,255,.07); min-width: 16px; }
+
+    /* Barra de força de senha */
+    .forca-wrap { margin-top: .45rem; display: none; }
+    .forca-barras { display: flex; gap: 4px; margin-bottom: .25rem; }
+    .forca-seg { height: 3px; flex: 1; border-radius: 2px; background: rgba(255,255,255,.09); transition: background .3s ease; }
+    .forca-txt { font-size: .7rem; color: rgba(168,200,255,.5); }
+
+    /* Termos */
+    .login-termos-link { color: var(--azul-200); text-decoration: none; transition: var(--trans); }
+    .login-termos-link:hover { color: var(--branco); }
+
+    /* ── RESPONSIVIDADE ── */
+    @media (max-width: 700px) {
+      .login-layout {
+        grid-template-columns: 1fr;
+        border-radius: var(--raio-lg);
+        max-width: 440px;
+        min-height: unset;
+      }
+      .login-painel-esq { display: none; }
+      .login-painel-dir { border-left: none; border-radius: var(--raio-lg); }
+    }
+    @media (max-width: 380px) {
+      .login-painel-dir { padding: 1.8rem 1.2rem; }
+    }
+
+    /* sr-only */
+    .sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); border:0; }
+  </style>
+</head>
+<body>
+
+  <!-- FUNDOS -->
+  <div class="login-fundo" aria-hidden="true">
+    <div class="login-fundo-grade"></div>
+    <div class="login-orb login-orb-1"></div>
+    <div class="login-orb login-orb-2"></div>
+    <div class="login-orb login-orb-3"></div>
+  </div>
+
+  <main class="pagina-login">
+    <div class="login-layout">
+
+      <!-- ═══ PAINEL ESQUERDO ═══ -->
+      <aside class="login-painel-esq" aria-hidden="true">
+        <div class="lp-topo">
+          <a href="index.html" class="login-logo">
+            <div class="login-logo-ic">IT</div>
+            <div>
+              <span class="login-logo-nome">ITEL</span>
+              <span class="login-logo-sub">Instituto de Telecomunicações</span>
+            </div>
+          </a>
+          <h1 class="login-painel-titulo">
+            O teu Portal<br/>
+            <span>do Aluno</span>
+          </h1>
+          <p class="login-painel-desc">Acede às tuas notas, horários, comunicados e muito mais num só lugar. A tua jornada académica, sempre contigo.</p>
+        </div>
+        <div class="lp-rodape">
+          <ul class="login-beneficios">
+            <li class="login-beneficio"><span class="login-beneficio-ic">📋</span>Consulta as tuas pautas e resultados</li>
+            <li class="login-beneficio"><span class="login-beneficio-ic">📅</span>Horários e calendário académico</li>
+            <li class="login-beneficio"><span class="login-beneficio-ic">📢</span>Comunicados e avisos em tempo real</li>
+            <li class="login-beneficio"><span class="login-beneficio-ic">📄</span>Declarações e documentos online</li>
+          </ul>
+        </div>
+      </aside>
+
+      <!-- ═══ PAINEL DIREITO ═══ -->
+      <section class="login-painel-dir">
+
+        <!-- Abas -->
+        <div class="login-abas" role="tablist" aria-label="Tipo de acesso">
+          <button class="login-aba ativa" id="aba-entrar"
+                  role="tab" aria-selected="true" aria-controls="form-entrar"
+                  onclick="trocarAba('entrar')">Entrar</button>
+          <button class="login-aba" id="aba-registar"
+                  role="tab" aria-selected="false" aria-controls="form-registar"
+                  onclick="trocarAba('registar')">Criar conta</button>
+        </div>
+
+        <!-- ── FORMULÁRIO: ENTRAR ── -->
+        <div class="login-form-painel ativo" id="form-entrar" role="tabpanel">
+          <h2 class="login-form-titulo">Bem-vindo de volta</h2>
+          <p class="login-form-sub">Insere as tuas credenciais para continuar</p>
+
+          <div class="login-aviso login-aviso-erro" id="aviso-erro" role="alert">
+            <svg viewBox="0 0 20 20" fill="currentColor" width="17" height="17"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/></svg>
+            <span id="aviso-erro-txt">Credenciais inválidas. Tenta novamente.</span>
+          </div>
+
+          <div class="login-campo">
+            <label for="campo-user" class="login-campo-label">Utilizador ou E-mail</label>
+            <div class="login-campo-wrap">
+              <span class="login-campo-ic"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"/></svg></span>
+              <input type="text" id="campo-user" class="login-input" placeholder="ex: joao.silva" autocomplete="username" required />
+            </div>
+            <p class="campo-erro" id="erro-user"><svg viewBox="0 0 16 16" fill="currentColor" width="11"><circle cx="8" cy="8" r="8" opacity=".3"/><path d="M7 5h2v4H7zm0 5h2v2H7z"/></svg> Campo obrigatório.</p>
+          </div>
+
+          <div class="login-campo">
+            <label for="campo-senha" class="login-campo-label">Senha</label>
+            <div class="login-campo-wrap">
+              <span class="login-campo-ic"><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"/></svg></span>
+              <input type="password" id="campo-senha" class="login-input" placeholder="A tua senha" autocomplete="current-password" required />
+              <button type="button" class="campo-olho" aria-label="Mostrar/ocultar senha" onclick="alternarSenha('campo-senha',this)">
+                <svg class="olho-ab" viewBox="0 0 20 20" fill="currentColor"><path d="M10 12a2 2 0 100-4 2 2 0 000 4z"/><path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"/></svg>
+                <svg class="olho-fe" viewBox="0 0 20 20" fill="currentColor" style="display:none"><path fill-rule="evenodd" d="M3.707 2.293a1 1 0 00-1.414 1.414l14 14a1 1 0 001.414-1.414l-1.473-1.473A10.014 10.014 0 0019.542 10C18.268 5.943 14.478 3 10 3a9.958 9.958 0 00-4.512 1.074l-1.78-1.781zm4.261 4.26l1.514 1.515a2.003 2.003 0 012.45 2.45l1.514 1.514a4 4 0 00-5.478-5.478z" clip-rule="evenodd"/><path d="M12.454 16.697L9.75 13.992a4 4 0 01-3.742-3.741L2.335 6.578A9.98 9.98 0 00.458 10c1.274 4.057 5.064 7 9.542 7 .847 0 1.669-.105 2.454-.303z"/></svg>
+              </button>
+            </div>
+            <p class="campo-erro" id="erro-senha"><svg viewBox="0 0 16 16" fill="currentColor" width="11"><circle cx="8" cy="8" r="8" opacity=".3"/><path d="M7 5h2v4H7zm0 5h2v2H7z"/></svg> Campo obrigatório.</p>
+          </div>
+
+          <div class="login-opcoes">
+            <label class="login-checkbox-wrap">
+              <input type="checkbox" class="login-checkbox" id="lembrar" />
+              <span class="login-checkbox-txt">Lembrar-me</span>
+            </label>
+            <a href="#" class="login-esqueci">Esqueci a senha</a>
+          </div>
+
+          <button type="button" class="login-btn-entrar" id="btn-entrar" onclick="tentarLogin()">
+            <span class="btn-txt">Entrar no Portal</span>
+            <svg class="btn-txt" viewBox="0 0 20 20" fill="currentColor" width="15" height="15"><path fill-rule="evenodd" d="M3 3a1 1 0 011 1v12a1 1 0 11-2 0V4a1 1 0 011-1zm7.707 3.293a1 1 0 010 1.414L9.414 9H17a1 1 0 110 2H9.414l1.293 1.293a1 1 0 01-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+            <div class="btn-spinner"></div>
+          </button>
+
+          <div class="login-divisor">
+            <div class="login-divisor-linha"></div>
+            <span class="login-divisor-txt">ou</span>
+            <div class="login-divisor-linha"></div>
+          </div>
+
+          <button type="button" class="login-btn-social">
+            <svg viewBox="0 0 21 21" fill="none"><rect x="1" y="1" width="9" height="9" fill="#4e8ef7"/><rect x="11" y="1" width="9" height="9" fill="#5dbcf5"/><rect x="1" y="11" width="9" height="9" fill="#3f74d0"/><rect x="11" y="11" width="9" height="9" fill="#2e5cb8"/></svg>
+            Entrar com conta Microsoft / Gov
+          </button>
+
+          <a href="index.html" class="login-voltar">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><path d="M10 4L6 8l4 4"/></svg>
+            Voltar ao site
+          </a>
+        </div>
+
+        <!-- ── FORMULÁRIO: REGISTAR ── -->
+        <div class="login-form-painel" id="form-registar" role="tabpanel">
+          <h2 class="login-form-titulo">Criar conta</h2>
+          <p class="login-form-sub">Preenche os dados para te registares</p>
+
+          <div class="registo-passos" aria-label="Progresso do registo">
+            <div class="registo-passo ativo" id="passo-1"><span class="registo-passo-num">1</span><span>Dados</span></div>
+            <div class="registo-passo-linha"></div>
+            <div class="registo-passo" id="passo-2"><span class="registo-passo-num">2</span><span>Acesso</span></div>
+            <div class="registo-passo-linha"></div>
+            <div class="registo-passo" id="passo-3"><span class="registo-passo-num">3</span><span>Confirmação</span></div>
+          </div>
+
+          <div class="login-aviso login-aviso-sucesso" id="aviso-reg-ok" role="status">
+            <svg viewBox="0 0 20 20" fill="currentColor" width="17"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+            Conta criada com sucesso! Verifica o teu e-mail.
+          </div>
+
+          <div class="login-campo">
+            <label for="reg-nome" class="login-campo-label">Nome completo</label>
+            <div class="login-campo-wrap">
+              <span class="login-campo-ic"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"/></svg></span>
+              <input type="text" id="reg-nome" class="login-input" placeholder="ex: João Manuel Silva" required />
+            </div>
+          </div>
+
+          <div class="login-campo">
+            <label for="reg-email" class="login-campo-label">E-mail</label>
+            <div class="login-campo-wrap">
+              <span class="login-campo-ic"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/></svg></span>
+              <input type="email" id="reg-email" class="login-input" placeholder="ex: joao@email.com" autocomplete="email" required />
+            </div>
+          </div>
+
+          <div class="login-campo">
+            <label for="reg-senha" class="login-campo-label">Senha</label>
+            <div class="login-campo-wrap">
+              <span class="login-campo-ic"><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"/></svg></span>
+              <input type="password" id="reg-senha" class="login-input" placeholder="Mínimo 8 caracteres" oninput="verificarForca(this.value)" required />
+              <button type="button" class="campo-olho" onclick="alternarSenha('reg-senha',this)" aria-label="Mostrar senha">
+                <svg class="olho-ab" viewBox="0 0 20 20" fill="currentColor"><path d="M10 12a2 2 0 100-4 2 2 0 000 4z"/><path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"/></svg>
+                <svg class="olho-fe" viewBox="0 0 20 20" fill="currentColor" style="display:none"><path fill-rule="evenodd" d="M3.707 2.293a1 1 0 00-1.414 1.414l14 14a1 1 0 001.414-1.414l-1.473-1.473A10.014 10.014 0 0019.542 10C18.268 5.943 14.478 3 10 3a9.958 9.958 0 00-4.512 1.074l-1.78-1.781zm4.261 4.26l1.514 1.515a2.003 2.003 0 012.45 2.45l1.514 1.514a4 4 0 00-5.478-5.478z" clip-rule="evenodd"/><path d="M12.454 16.697L9.75 13.992a4 4 0 01-3.742-3.741L2.335 6.578A9.98 9.98 0 00.458 10c1.274 4.057 5.064 7 9.542 7 .847 0 1.669-.105 2.454-.303z"/></svg>
+              </button>
+            </div>
+            <div class="forca-wrap" id="forca-wrap">
+              <div class="forca-barras">
+                <div class="forca-seg" id="fs-1"></div>
+                <div class="forca-seg" id="fs-2"></div>
+                <div class="forca-seg" id="fs-3"></div>
+                <div class="forca-seg" id="fs-4"></div>
+              </div>
+              <span class="forca-txt" id="forca-txt"></span>
+            </div>
+          </div>
+
+          <div class="login-campo">
+            <label for="reg-conf" class="login-campo-label">Confirmar Senha</label>
+            <div class="login-campo-wrap">
+              <span class="login-campo-ic"><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg></span>
+              <input type="password" id="reg-conf" class="login-input" placeholder="Repete a senha" required />
+            </div>
+          </div>
+
+          <div style="margin-bottom:clamp(1.2rem,2.5vw,1.5rem)">
+            <label class="login-checkbox-wrap">
+              <input type="checkbox" class="login-checkbox" id="aceitar-termos" />
+              <span class="login-checkbox-txt">
+                Aceito os <a href="#" class="login-termos-link">Termos de Uso</a> e a <a href="#" class="login-termos-link">Política de Privacidade</a>
+              </span>
+            </label>
+          </div>
+
+          <button type="button" class="login-btn-entrar" id="btn-registar" onclick="tentarRegistar()">
+            <span class="btn-txt">Criar Conta</span>
+            <svg class="btn-txt" viewBox="0 0 20 20" fill="currentColor" width="15"><path d="M8 9a3 3 0 100-6 3 3 0 000 6zM8 11a6 6 0 016 6H2a6 6 0 016-6zM16 7a1 1 0 10-2 0v1h-1a1 1 0 100 2h1v1a1 1 0 102 0v-1h1a1 1 0 100-2h-1V7z"/></svg>
+            <div class="btn-spinner"></div>
+          </button>
+
+          <a href="index.html" class="login-voltar">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" width="13"><path d="M10 4L6 8l4 4"/></svg>
+            Voltar ao site
+          </a>
+        </div>
+
+      </section>
+    </div>
+  </main>
+   
+</body>
+</html>

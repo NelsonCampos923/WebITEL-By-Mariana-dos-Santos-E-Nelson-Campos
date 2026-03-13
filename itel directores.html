@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="pt-AO">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Ex-Directores do ITEL — Conheça os líderes que construíram o Instituto de Telecomunicações de Angola ao longo das décadas." />
+  <title>ITEL — Ex‑Directores</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;family=Space+Grotesk:wght@400;500;700&amp;display=swap" rel="stylesheet" />
+
+  <!-- CSS Principal -->
+ <link rel="stylesheet" href="../css/index.css" />
+
+  <!-- Estilos específicos desta página -->
+  <style>
+    /* ── Herói ── */
+    .pag-heroi {
+      position: relative;
+      padding: clamp(7rem, 14vw, 11rem) 0 clamp(3rem, 6vw, 5rem);
+      overflow: hidden;
+      text-align: center;
+    }
+
+    .pag-heroi-fundo {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 100% 80% at 50% 0%, rgba(13, 48, 128, .65) 0%, transparent 70%),
+        url('assets/img/heroi-galeria-evento.jpg') center/cover no-repeat;
+      z-index: 0;
+    }
+
+    .pag-heroi-fundo::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(2, 12, 27, .45) 0%, rgba(2, 12, 27, .72) 60%, var(--azul-900) 100%);
+    }
+
+    .pag-heroi-grade {
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(circle, rgba(255, 255, 255, .05) 1px, transparent 1px);
+      background-size: 36px 36px;
+      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black, transparent);
+      z-index: 1;
+    }
+
+    .pag-heroi-conteudo { position: relative; z-index: 2; }
+
+    .pag-migalha {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      font-size: .78rem;
+      color: rgba(168, 200, 255, .55);
+      margin-bottom: 1.2rem;
+    }
+
+    .pag-migalha a {
+      color: rgba(168, 200, 255, .55);
+      transition: var(--trans);
+    }
+
+    .pag-migalha a:hover { color: var(--branco); }
+    .pag-migalha-sep { opacity: .4; }
+    .pag-migalha-actual { color: var(--azul-100); font-weight: 600; }
+
+    .pag-heroi-titulo {
+      font-family: var(--fonte-display);
+      font-size: clamp(2.2rem, 5vw, 4rem);
+      font-weight: 800;
+      color: var(--branco);
+      line-height: 1.08;
+      margin-bottom: .9rem;
+    }
+
+    .pag-heroi-titulo span {
+      background: linear-gradient(135deg, var(--azul-200) 0%, var(--azul-50) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .pag-heroi-desc {
+      font-size: clamp(.9rem, 1.6vw, 1.05rem);
+      color: rgba(168, 200, 255, .65);
+      max-width: 540px;
+      margin-inline: auto;
+      font-weight: 400;
+      line-height: 1.7;
+    }
+
+    /* ── Director actual (topo) ── */
+    .director-actual {
+      background: linear-gradient(135deg, rgba(13, 48, 128, .55), rgba(4, 15, 36, .75));
+      border: 1px solid rgba(91, 147, 245, .25);
+      border-radius: var(--raio-lg);
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: clamp(200px, 28%, 280px) 1fr;
+      gap: 0;
+      margin-bottom: clamp(3rem, 6vw, 5rem);
+      position: relative;
+    }
+
+    @media (max-width: 700px) {
+      .director-actual { grid-template-columns: 1fr; }
+    }
+
+    .director-actual::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 80% 60% at 0% 0%, rgba(46, 109, 232, .12), transparent 70%);
+      pointer-events: none;
+    }
+
+    .director-actual-foto {
+      position: relative;
+      overflow: hidden;
+      min-height: clamp(240px, 35vw, 360px);
+    }
+
+    .director-actual-foto img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top;
+      display: block;
+      transition: transform .6s ease;
+    }
+
+    .director-actual:hover .director-actual-foto img { transform: scale(1.04); }
+
+    .director-actual-foto::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, transparent 60%, rgba(4, 15, 36, .9) 100%);
+    }
+
+    @media (max-width: 700px) {
+      .director-actual-foto { min-height: clamp(180px, 50vw, 280px); }
+      .director-actual-foto::after {
+        background: linear-gradient(180deg, transparent 50%, rgba(4, 15, 36, .92) 100%);
+      }
+    }
+
+    .director-actual-info {
+      padding: clamp(1.8rem, 4vw, 3rem);
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 1rem;
+    }
+
+    .director-cargo-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: .4rem;
+      background: rgba(46, 109, 232, .15);
+      border: 1px solid rgba(91, 147, 245, .3);
+      color: var(--azul-100);
+      font-size: .68rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      padding: .3rem .85rem;
+      border-radius: var(--raio-full);
+      align-self: flex-start;
+    }
+
+    .director-actual-nome {
+      font-family: var(--fonte-display);
+      font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+      font-weight: 800;
+      color: var(--branco);
+      line-height: 1.1;
+    }
+
+    .director-actual-periodo {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      font-size: clamp(.8rem, 1.5vw, .88rem);
+      color: var(--azul-200);
+      font-weight: 600;
+    }
+
+    .director-actual-periodo::before {
+      content: '';
+      width: 22px;
+      height: 1px;
+      background: var(--azul-300);
+    }
+
+    .director-actual-bio {
+      font-size: clamp(.84rem, 1.5vw, .93rem);
+      color: rgba(168, 200, 255, .65);
+      line-height: 1.72;
+      max-width: 540px;
+    }
+
+    .director-actual-conquistas {
+      display: flex;
+      gap: clamp(.6rem, 1.5vw, .9rem);
+      flex-wrap: wrap;
+      margin-top: .3rem;
+    }
+
+    .conquista-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: .32rem;
+      background: var(--vidro);
+      border: 1px solid var(--vidro-borda);
+      border-radius: var(--raio-full);
+      padding: .32rem .8rem;
+      font-size: .72rem;
+      color: rgba(168, 200, 255, .7);
+    }
+
+    /* ── Linha do tempo ── */
+    .timeline-secao { padding-block: var(--secao-py); }
+
+    .timeline {
+      position: relative;
+      padding-left: clamp(2rem, 5vw, 4rem);
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: clamp(.6rem, 1.5vw, 1.2rem);
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(180deg, var(--azul-400), rgba(46, 109, 232, .1));
+    }
+
+    .timeline-item {
+      position: relative;
+      margin-bottom: clamp(2.5rem, 5vw, 4rem);
+      padding-bottom: clamp(2.5rem, 5vw, 4rem);
+      border-bottom: 1px solid var(--vidro-borda);
+    }
+
+    .timeline-item:last-child {
+      margin-bottom: 0;
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+
+    /* Ponto na linha */
+    .timeline-ponto {
+      position: absolute;
+      left: clamp(-2.6rem, -5.5vw, -4.2rem);
+      top: clamp(1.5rem, 3vw, 2rem);
+      width: clamp(12px, 2.5vw, 18px);
+      height: clamp(12px, 2.5vw, 18px);
+      background: var(--azul-400);
+      border: 2px solid var(--azul-300);
+      border-radius: 50%;
+      box-shadow: 0 0 16px rgba(46, 109, 232, .5);
+    }
+
+    .timeline-card {
+      display: grid;
+      grid-template-columns: clamp(130px, 22%, 200px) 1fr;
+      gap: clamp(1.2rem, 3vw, 2rem);
+      background: var(--vidro);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--vidro-borda);
+      border-radius: var(--raio-md);
+      overflow: hidden;
+      transition: var(--trans-lenta);
+    }
+
+    .timeline-card:hover {
+      background: var(--vidro-hover);
+      border-color: rgba(91, 147, 245, .22);
+      transform: translateX(6px);
+      box-shadow: var(--sombra-azul);
+    }
+
+    @media (max-width: 580px) {
+      .timeline-card { grid-template-columns: 1fr; }
+    }
+
+    .timeline-foto {
+      overflow: hidden;
+      min-height: clamp(140px, 22vw, 200px);
+    }
+
+    .timeline-foto img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top;
+      display: block;
+      transition: transform .6s ease;
+    }
+
+    .timeline-card:hover .timeline-foto img { transform: scale(1.06); }
+
+    .timeline-info {
+      padding: clamp(1.1rem, 2.5vw, 1.5rem) clamp(1.1rem, 2.5vw, 1.5rem) clamp(1.1rem, 2.5vw, 1.5rem) 0;
+      display: flex;
+      flex-direction: column;
+      gap: .55rem;
+    }
+
+    @media (max-width: 580px) {
+      .timeline-info { padding: clamp(1rem, 3vw, 1.4rem); }
+    }
+
+    .timeline-periodo {
+      display: inline-flex;
+      align-items: center;
+      background: rgba(46, 109, 232, .1);
+      border: 1px solid rgba(91, 147, 245, .2);
+      color: var(--azul-100);
+      font-size: .65rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      padding: .24rem .72rem;
+      border-radius: var(--raio-full);
+      align-self: flex-start;
+    }
+
+    .timeline-nome {
+      font-family: var(--fonte-display);
+      font-size: clamp(1.05rem, 2.2vw, 1.35rem);
+      font-weight: 800;
+      color: var(--branco);
+      line-height: 1.2;
+    }
+
+    .timeline-cargo {
+      font-size: clamp(.78rem, 1.4vw, .85rem);
+      color: var(--azul-200);
+      font-weight: 600;
+    }
+
+    .timeline-bio {
+      font-size: clamp(.78rem, 1.4vw, .85rem);
+      color: rgba(168, 200, 255, .58);
+      line-height: 1.68;
+    }
+
+    .timeline-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .4rem;
+      margin-top: .2rem;
+    }
+
+    .timeline-tag {
+      background: rgba(255, 255, 255, .04);
+      border: 1px solid var(--vidro-borda);
+      border-radius: var(--raio-full);
+      padding: .22rem .6rem;
+      font-size: .68rem;
+      color: rgba(168, 200, 255, .5);
+    }
+
+    /* Ano na margem */
+    .timeline-ano {
+      position: absolute;
+      left: clamp(-5rem, -9vw, -7rem);
+      top: clamp(1.2rem, 3vw, 1.9rem);
+      font-family: var(--fonte-display);
+      font-size: clamp(.68rem, 1.2vw, .78rem);
+      font-weight: 700;
+      color: rgba(91, 147, 245, .45);
+      letter-spacing: .05em;
+      white-space: nowrap;
+    }
+
+    @media (max-width: 480px) {
+      .timeline-ano { display: none; }
+    }
+
+    /* ── Legado / conquistas institucionais ── */
+    .legado-secao { padding-block: var(--secao-py); }
+
+    .legado-grade {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(min(100%, 220px), 1fr));
+      gap: clamp(.9rem, 2vw, 1.2rem);
+    }
+
+    .legado-card {
+      background: var(--vidro);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--vidro-borda);
+      border-radius: var(--raio-md);
+      padding: clamp(1.2rem, 3vw, 1.6rem);
+      transition: var(--trans);
+      text-align: center;
+    }
+
+    .legado-card:hover {
+      background: var(--vidro-hover);
+      transform: translateY(-4px);
+      border-color: rgba(91, 147, 245, .22);
+    }
+
+    .legado-icone {
+      width: clamp(44px, 7vw, 56px);
+      height: clamp(44px, 7vw, 56px);
+      background: linear-gradient(135deg, rgba(13, 48, 128, .6), rgba(46, 109, 232, .2));
+      border: 1px solid rgba(91, 147, 245, .25);
+      border-radius: var(--raio-sm);
+      display: grid;
+      place-items: center;
+      font-size: clamp(1.1rem, 2vw, 1.4rem);
+      margin: 0 auto clamp(.8rem, 1.5vw, 1rem);
+    }
+
+    .legado-num {
+      font-family: var(--fonte-display);
+      font-size: clamp(1.5rem, 3.5vw, 2rem);
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--branco), var(--azul-200));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
+      margin-bottom: .3rem;
+    }
+
+    .legado-titulo {
+      font-family: var(--fonte-display);
+      font-size: clamp(.88rem, 1.5vw, .95rem);
+      font-weight: 700;
+      color: var(--branco);
+      margin-bottom: .3rem;
+    }
+
+    .legado-desc {
+      font-size: clamp(.74rem, 1.3vw, .8rem);
+      color: rgba(168, 200, 255, .5);
+      line-height: 1.6;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- NAVEGAÇÃO -->
+  <header>
+    <nav class="navegacao rolada" id="barra-nav">
+      <div class="container">
+        <div class="nav-interior">
+          <a href="index.html" class="nav-logo">
+            <div class="nav-logo-icone">IT</div>
+            <div class="nav-logo-txt">
+              <span class="nav-logo-nome">ITEL</span>
+              <span class="nav-logo-sub">Instituto de Telecomunicações</span>
+            </div>
+          </a>
+
+         <ul class="nav-links" role="list">
+            <li><a href="../index.html#cursos">Cursos</a></li>
+            <li><a href="../index.html#sobre">Sobre</a></li>
+            <li><a href="itel actividades.html">Actividades</a></li>
+            <li><a href="itel directores.html" style="color:var(--branco)">Ex‑Directores</a></li>
+            <li><a href="noticias.html">Notícias</a></li>
+            <li><a href="galeria.html">Galeria</a></li>
+            <li><a href="../index.html#rodape">Contactos</a></li>
+            <li><a href="login.html" class="nav-cta">Portal do Aluno</a></li>
+          </ul>
+
+
+          <button class="nav-hamburguer" id="btn-menu" aria-label="Abrir menu" aria-expanded="false">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- MENU MOBILE -->
+  <nav class="menu-mobile" id="menu-mobile" aria-label="Menu mobile" aria-hidden="true">
+    <button class="menu-fechar" id="btn-fechar" aria-label="Fechar menu">✕</button>
+    <a href="index.html#cursos" onclick="fecharMenu()">Cursos</a>
+    <a href="index.html#sobre" onclick="fecharMenu()">Sobre</a>
+    <a href="itel-actividades.html" onclick="fecharMenu()">Actividades</a>
+    <a href="itel-directores.html" onclick="fecharMenu()">Ex‑Directores</a>
+    <a href="itel-noticias.html" onclick="fecharMenu()">Notícias</a>
+    <a href="itel-galeria.html" onclick="fecharMenu()">Galeria</a>
+    <a href="index.html#rodape" onclick="fecharMenu()">Contactos</a>
+    <a href="itel-login.html" class="btn-primario" onclick="fecharMenu()">Portal do Aluno</a>
+  </nav>
+
+  <main>
+    <!-- HERÓI -->
+    <section class="pag-heroi">
+      <div class="pag-heroi-fundo" aria-hidden="true"></div>
+      <div class="pag-heroi-grade" aria-hidden="true"></div>
+
+      <div class="container pag-heroi-conteudo">
+        <nav class="pag-migalha" aria-label="Caminho de navegação">
+          <a href="index.html">Início</a>
+          <span class="pag-migalha-sep">›</span>
+          <span class="pag-migalha-actual">Ex‑Directores</span>
+        </nav>
+
+        <h1 class="pag-heroi-titulo">Ex‑<span>Directores</span></h1>
+        <p class="pag-heroi-desc">
+          Conheça os homens e mulheres que ao longo de décadas construíram, lideraram e transformaram o ITEL numa referência das telecomunicações em Angola.
+        </p>
+      </div>
+    </section>
+
+    <!-- DIRECTOR ACTUAL -->
+    <section style="padding-block: clamp(3rem,6vw,5rem) 0; position:relative; z-index:1;">
+      <div class="container">
+        <header class="secao-cabecalho" style="margin-bottom: clamp(1.5rem,3vw,2.5rem);">
+          <div class="secao-etiqueta">Liderança Actual</div>
+          <div class="linha-deco animar-entrada"><div class="linha-deco-centro"></div></div>
+          <h2 class="secao-titulo animar-entrada">Director <span>Geral</span></h2>
+        </header>
+
+        <div class="director-actual animar-entrada">
+          <div class="director-actual-foto">
+            <img src="assets/img/galeria-formatura-turma.jpg" alt="Director Geral ITEL" />
+          </div>
+          <div class="director-actual-info">
+            <span class="director-cargo-badge">✦ Director Geral em Funções</span>
+            <h2 class="director-actual-nome">Eng.º Cláudio Gonçalves</h2>
+            <p class="director-actual-periodo">2020 – Presente</p>
+            <p class="director-actual-bio">
+              Engenheiro de Telecomunicações formado pela Universidade Agostinho Neto, com mestrado pela Universidade do Porto. Lidera o ITEL desde 2020, tendo impulsionado a modernização curricular, a parceria com a Cisco e a criação do Laboratório de Inovação 5G. Sob a sua direcção o ITEL duplicou o número de estudantes e lançou a 6.ª e 7.ª edição do FITITEL.
+            </p>
+            <div class="director-actual-conquistas">
+              <span class="conquista-chip">🎓 2× aumento de matrículas</span>
+              <span class="conquista-chip">🤝 Parceria Cisco</span>
+              <span class="conquista-chip">📡 Lab. 5G</span>
+              <span class="conquista-chip">🏆 FITITEL VI &amp; VII</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- LINHA DO TEMPO -->
+    <section class="timeline-secao" style="position:relative; z-index:1;">
+      <div class="container">
+        <header class="secao-cabecalho">
+          <div class="secao-etiqueta">História</div>
+          <div class="linha-deco animar-entrada"><div class="linha-deco-centro"></div></div>
+          <h2 class="secao-titulo animar-entrada">Direcções <span>Anteriores</span></h2>
+          <p class="secao-subtitulo animar-entrada">
+            Uma linha de liderança comprometida com a excelência das telecomunicações em Angola.
+          </p>
+        </header>
+
+        <div class="timeline">
+          <!-- 2015–2020 -->
+          <div class="timeline-item animar-entrada">
+            <div class="timeline-ponto" aria-hidden="true"></div>
+            <span class="timeline-ano">2015</span>
+            <div class="timeline-card">
+              <div class="timeline-foto">
+                <img src="assets/img/galeria-formatura-turma.jpg" alt="Directora Ana Lúcia Ferreira" loading="lazy" />
+              </div>
+              <div class="timeline-info">
+                <span class="timeline-periodo">2015 — 2020</span>
+                <h3 class="timeline-nome">Eng.ª Ana Lúcia Ferreira</h3>
+                <p class="timeline-cargo">Directora Geral</p>
+                <p class="timeline-bio">
+                  Primeira mulher a liderar o ITEL. Formada em Engenharia Electrónica pela UAN, com pós‑graduação em Gestão Pública pela Universidade Católica de Angola. Durante o seu mandato modernizou os laboratórios, lançou os cursos de Informática Multimédia e estabeleceu os primeiros protocolos de cooperação com instituições europeias.
+                </p>
+                <div class="timeline-tags">
+                  <span class="timeline-tag">Primeira directora mulher</span>
+                  <span class="timeline-tag">Modernização dos labs</span>
+                  <span class="timeline-tag">Cooperação europeia</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2010–2015 -->
+          <div class="timeline-item animar-entrada atraso-1">
+            <div class="timeline-ponto" aria-hidden="true"></div>
+            <span class="timeline-ano">2010</span>
+            <div class="timeline-card">
+              <div class="timeline-foto">
+                <img src="assets/img/heroi-galeria-evento.jpg" alt="Director Manuel Cardoso" loading="lazy" />
+              </div>
+              <div class="timeline-info">
+                <span class="timeline-periodo">2010 — 2015</span>
+                <h3 class="timeline-nome">Eng.º Manuel Cardoso</h3>
+                <p class="timeline-cargo">Director Geral</p>
+                <p class="timeline-bio">
+                  Engenheiro de Sistemas formado em Cuba e especializado em redes de telecomunicações. Expandiu a capacidade de formação do ITEL para o dobro e criou o Programa Nacional de Bolsas de Excelência. Fundou também a Associação de Ex‑Alunos do ITEL, que hoje conta com mais de 3 000 membros.
+                </p>
+                <div class="timeline-tags">
+                  <span class="timeline-tag">Expansão da capacidade</span>
+                  <span class="timeline-tag">Programa de bolsas</span>
+                  <span class="timeline-tag">Associação de alumni</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2004–2010 -->
+          <div class="timeline-item animar-entrada atraso-2">
+            <div class="timeline-ponto" aria-hidden="true"></div>
+            <span class="timeline-ano">2004</span>
+            <div class="timeline-card">
+              <div class="timeline-foto">
+                <img src="assets/img/galeria-graduados-cerimonia.jpg" alt="Director João Sebastião" loading="lazy" />
+              </div>
+              <div class="timeline-info">
+                <span class="timeline-periodo">2004 — 2010</span>
+                <h3 class="timeline-nome">Eng.º João Sebastião</h3>
+                <p class="timeline-cargo">Director Geral</p>
+                <p class="timeline-bio">
+                  Veterano das telecomunicações angolanas, licenciado pela Universidade de Moscovo e com carreira na ANGOTEL. Após o fim do conflito armado, liderou a reconstrução e relançamento do ITEL, restabelecendo as condições de funcionamento, reabilitando as infra‑estruturas físicas e retomando as parcerias com o INACOM e o MINTEL.
+                </p>
+                <div class="timeline-tags">
+                  <span class="timeline-tag">Reconstrução pós-conflito</span>
+                  <span class="timeline-tag">Reabilitação das instalações</span>
+                  <span class="timeline-tag">Parceria INACOM</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 1997–2004 -->
+          <div class="timeline-item animar-entrada atraso-3">
+            <div class="timeline-ponto" aria-hidden="true"></div>
+            <span class="timeline-ano">1997</span>
+            <div class="timeline-card">
+              <div class="timeline-foto">
+                <img src="assets/img/galeria-fititel-palco-principal.jpg" alt="Director Carlos Domingos" loading="lazy" />
+              </div>
+              <div class="timeline-info">
+                <span class="timeline-periodo">1997 — 2004</span>
+                <h3 class="timeline-nome">Eng.º Carlos Domingos</h3>
+                <p class="timeline-cargo">Director Geral</p>
+                <p class="timeline-bio">
+                  Formado em Electrónica e Telecomunicações pela Universidade de Havana. Assumiu a direcção num período de grandes desafios logísticos, mantendo o funcionamento do instituto e formando centenas de técnicos que viriam a sustentar as redes de comunicação do país nos anos críticos da reconstituição nacional.
+                </p>
+                <div class="timeline-tags">
+                  <span class="timeline-tag">Continuidade em período crítico</span>
+                  <span class="timeline-tag">Formação de técnicos nacionais</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 1985–1997 -->
+          <div class="timeline-item animar-entrada atraso-4">
+            <div class="timeline-ponto" aria-hidden="true"></div>
+            <span class="timeline-ano">1985</span>
+            <div class="timeline-card">
+              <div class="timeline-foto">
+                <img src="assets/img/galeria-biblioteca-tecnica.jpg" alt="Fundador Director António Lopes" loading="lazy" />
+              </div>
+              <div class="timeline-info">
+                <span class="timeline-periodo">1985 — 1997</span>
+                <h3 class="timeline-nome">Eng.º António Lopes</h3>
+                <p class="timeline-cargo">Director Fundador</p>
+                <p class="timeline-bio">
+                  Co-fundador e primeiro director do ITEL. Engenheiro formado na União Soviética, especialista em sistemas de rádio e transmissão. Concebeu o modelo pedagógico original do instituto, negociou as primeiras cooperações internacionais com países do bloco soviético e do continente africano, e formou a primeira geração de técnicos de telecomunicações angolanos.
+                </p>
+                <div class="timeline-tags">
+                  <span class="timeline-tag">Director fundador</span>
+                  <span class="timeline-tag">Modelo pedagógico original</span>
+                  <span class="timeline-tag">1.ª geração de técnicos</span>
+                  <span class="timeline-tag">Cooperação internacional</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- LEGADO INSTITUCIONAL -->
+    <section class="legado-secao" style="position:relative;z-index:1;">
+      <div class="container">
+        <header class="secao-cabecalho">
+          <div class="secao-etiqueta">Impacto</div>
+          <div class="linha-deco animar-entrada"><div class="linha-deco-centro"></div></div>
+          <h2 class="secao-titulo animar-entrada">O Legado <span>Institucional</span></h2>
+          <p class="secao-subtitulo animar-entrada">
+            Quatro décadas de liderança resultam num impacto mensurável nas telecomunicações angolanas.
+          </p>
+        </header>
+
+        <div class="legado-grade">
+          <div class="legado-card animar-entrada">
+            <div class="legado-icone">🎓</div>
+            <div class="legado-num">12 000+</div>
+            <div class="legado-titulo">Técnicos formados</div>
+            <div class="legado-desc">Desde a fundação, o ITEL formou milhares de técnicos que hoje sustentam as redes nacionais.</div>
+          </div>
+
+          <div class="legado-card animar-entrada atraso-1">
+            <div class="legado-icone">📅</div>
+            <div class="legado-num">40+</div>
+            <div class="legado-titulo">Anos de história</div>
+            <div class="legado-desc">Fundado em 1985, o ITEL atravessou épocas de transformação mantendo a missão de formar.</div>
+          </div>
+
+          <div class="legado-card animar-entrada atraso-2">
+            <div class="legado-icone">👤</div>
+            <div class="legado-num">6</div>
+            <div class="legado-titulo">Directores Gerais</div>
+            <div class="legado-desc">Seis lideranças distintas, cada uma deixando uma marca indelével na identidade do instituto.</div>
+          </div>
+
+          <div class="legado-card animar-entrada atraso-3">
+            <div class="legado-icone">🤝</div>
+            <div class="legado-num">22</div>
+            <div class="legado-titulo">Acordos internacionais</div>
+            <div class="legado-desc">Protocolos com instituições de Portugal, Brasil, Cuba, China e países africanos parceiros.</div>
+          </div>
+
+          <div class="legado-card animar-entrada atraso-4">
+            <div class="legado-icone">🏆</div>
+            <div class="legado-num">7</div>
+            <div class="legado-titulo">Edições do FITITEL</div>
+            <div class="legado-desc">A mais importante feira de inovação tecnológica de Angola, criada e mantida pelo ITEL.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- RODAPÉ -->
+  <footer class="rodape" style="padding-top:2rem">
+    <div class="container">
+      <div class="rodape-divisor"></div>
+      <div class="rodape-base" style="justify-content:center;flex-direction:column;align-items:center;gap:.5rem">
+        <p class="rodape-copyright">© 2025 Instituto de Telecomunicações — ITEL. Todos os direitos reservados.</p>
+        <nav class="rodape-legais">
+          <a href="#">Termos de Uso</a>
+          <a href="#">Privacidade</a>
+          <a href="index.html">Página Principal</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+  <button class="voltar-topo" id="btn-topo" aria-label="Voltar ao topo">↑</button>
+
+  <!-- SCRIPTS -->
+  <script>
+    'use strict';
+
+    // Menu mobile
+    const menuMobile = document.getElementById('menu-mobile');
+    const btnMenu = document.getElementById('btn-menu');
+
+    btnMenu.addEventListener('click', () => {
+      menuMobile.classList.add('aberto');
+      menuMobile.setAttribute('aria-hidden', 'false');
+      btnMenu.setAttribute('aria-expanded', 'true');
+      document.body.style.overflow = 'hidden';
+    });
+
+    document.getElementById('btn-fechar').addEventListener('click', fecharMenu);
+
+    function fecharMenu() {
+      menuMobile.classList.remove('aberto');
+      menuMobile.setAttribute('aria-hidden', 'true');
+      btnMenu.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    }
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && menuMobile.classList.contains('aberto')) fecharMenu();
+    });
+
+    // Botão voltar ao topo
+    const btnTopo = document.getElementById('btn-topo');
+    window.addEventListener('scroll', () => {
+      btnTopo.classList.toggle('visivel', scrollY > 400);
+    }, { passive: true });
+
+    btnTopo.addEventListener('click', () => {
+      scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // Animações de entrada (Intersection Observer)
+    const obs = new IntersectionObserver(es => {
+      es.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visivel');
+          obs.unobserve(e.target);
+        }
+      });
+    }, { threshold: .1 });
+
+    document.querySelectorAll('.animar-entrada').forEach(el => obs.observe(el));
+  </script>
+</body>
+</html>
